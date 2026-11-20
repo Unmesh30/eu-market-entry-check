@@ -1,0 +1,1562 @@
+{
+ "author": {
+  "code": "https://github.com/Unmesh30/eu-market-entry-check",
+  "linkedin": "https://www.linkedin.com/in/unmesh-achar-319467210/",
+  "name": "Unmesh Achar"
+ },
+ "countries": {
+  "AT": {
+   "currency": "EUR",
+   "name": "Austria"
+  },
+  "BE": {
+   "currency": "EUR",
+   "name": "Belgium"
+  },
+  "BG": {
+   "currency": "EUR",
+   "name": "Bulgaria"
+  },
+  "CY": {
+   "currency": "EUR",
+   "name": "Cyprus"
+  },
+  "CZ": {
+   "currency": "CZK",
+   "name": "Czechia"
+  },
+  "DE": {
+   "currency": "EUR",
+   "name": "Germany"
+  },
+  "DK": {
+   "currency": "DKK",
+   "name": "Denmark"
+  },
+  "EE": {
+   "currency": "EUR",
+   "name": "Estonia"
+  },
+  "EL": {
+   "currency": "EUR",
+   "name": "Greece"
+  },
+  "ES": {
+   "currency": "EUR",
+   "name": "Spain"
+  },
+  "FI": {
+   "currency": "EUR",
+   "name": "Finland"
+  },
+  "FR": {
+   "currency": "EUR",
+   "name": "France"
+  },
+  "HR": {
+   "currency": "EUR",
+   "name": "Croatia"
+  },
+  "HU": {
+   "currency": "HUF",
+   "name": "Hungary"
+  },
+  "IE": {
+   "currency": "EUR",
+   "name": "Ireland"
+  },
+  "IT": {
+   "currency": "EUR",
+   "name": "Italy"
+  },
+  "LT": {
+   "currency": "EUR",
+   "name": "Lithuania"
+  },
+  "LU": {
+   "currency": "EUR",
+   "name": "Luxembourg"
+  },
+  "LV": {
+   "currency": "EUR",
+   "name": "Latvia"
+  },
+  "MT": {
+   "currency": "EUR",
+   "name": "Malta"
+  },
+  "NL": {
+   "currency": "EUR",
+   "name": "Netherlands"
+  },
+  "PL": {
+   "currency": "PLN",
+   "name": "Poland"
+  },
+  "PT": {
+   "currency": "EUR",
+   "name": "Portugal"
+  },
+  "RO": {
+   "currency": "RON",
+   "name": "Romania"
+  },
+  "SE": {
+   "currency": "SEK",
+   "name": "Sweden"
+  },
+  "SI": {
+   "currency": "EUR",
+   "name": "Slovenia"
+  },
+  "SK": {
+   "currency": "EUR",
+   "name": "Slovakia"
+  }
+ },
+ "currency_names": {
+  "CZK": "Czech koruna",
+  "DKK": "Danish krone",
+  "EUR": "euro",
+  "HUF": "Hungarian forint",
+  "PLN": "Polish złoty",
+  "RON": "Romanian leu",
+  "SEK": "Swedish krona"
+ },
+ "customs": {
+  "checked": "2026-11-20",
+  "duty_eur": 3,
+  "from": "2026-07-01",
+  "max_value_eur": 150,
+  "until": "2028-07-01",
+  "url": "https://taxation-customs.ec.europa.eu/news/guidance-and-legal-text-temporary-flat-fee-low-value-imports-which-will-apply-until-1-july-2028-2026-06-08_en"
+ },
+ "flag_meanings": {
+  "b": "break in series",
+  "c": "confidential",
+  "d": "definition differs",
+  "e": "estimated",
+  "f": "forecast",
+  "n": "not significant",
+  "p": "provisional",
+  "r": "revised",
+  "s": "Eurostat estimate",
+  "u": "low reliability",
+  "z": "not applicable"
+ },
+ "generated_at": "2026-11-20T20:05Z",
+ "sources": {
+  "eurostat": {
+   "abroad": {
+    "any": {
+     "AT": 72.24,
+     "BE": 66.58,
+     "BG": 32.32,
+     "CY": 87.88,
+     "CZ": 41.91,
+     "DE": 25.0,
+     "DK": 44.4,
+     "EE": 53.71,
+     "EL": 31.59,
+     "ES": 43.82,
+     "FI": 48.53,
+     "FR": 51.68,
+     "HR": 52.21,
+     "HU": 46.13,
+     "IE": 63.24,
+     "IT": 43.78,
+     "LT": 45.41,
+     "LU": 76.7,
+     "LV": 58.19,
+     "MT": 82.82,
+     "NL": 43.13,
+     "PL": 16.1,
+     "PT": 56.55,
+     "RO": 21.51,
+     "SE": 35.55,
+     "SI": 56.55,
+     "SK": 43.1
+    },
+    "dataset": "isoc_ec_ibos",
+    "eu": {
+     "AT": 69.21,
+     "BE": 62.41,
+     "BG": 27.4,
+     "CY": 80.75,
+     "CZ": 35.63,
+     "DE": 20.25,
+     "DK": 39.88,
+     "EE": 42.98,
+     "EL": 27.8,
+     "ES": 31.51,
+     "FI": 43.62,
+     "FR": 38.66,
+     "HR": 46.65,
+     "HU": 42.38,
+     "IE": 55.23,
+     "IT": 37.69,
+     "LT": 36.72,
+     "LU": 69.5,
+     "LV": 46.35,
+     "MT": 63.44,
+     "NL": 34.4,
+     "PL": 12.63,
+     "PT": 45.29,
+     "RO": 18.73,
+     "SE": 29.4,
+     "SI": 50.17,
+     "SK": 39.02
+    },
+    "flags": {},
+    "non_eu": {
+     "AT": 24.31,
+     "BE": 15.91,
+     "BG": 12.92,
+     "CY": 47.19,
+     "CZ": 16.62,
+     "DE": 11.64,
+     "DK": 15.73,
+     "EE": 27.0,
+     "EL": 11.97,
+     "ES": 29.18,
+     "FI": 16.97,
+     "FR": 31.04,
+     "HR": 18.99,
+     "HU": 16.84,
+     "IE": 37.27,
+     "IT": 24.76,
+     "LT": 22.12,
+     "LU": 28.96,
+     "LV": 24.91,
+     "MT": 54.23,
+     "NL": 21.28,
+     "PL": 7.37,
+     "PT": 23.14,
+     "RO": 6.5,
+     "SE": 15.5,
+     "SI": 21.75,
+     "SK": 14.81
+    },
+    "updated": "2026-04-17T11:00:00+0200",
+    "year": 2023
+   },
+   "checks": [
+    {
+     "detail": "Survey years: 2025 for 4, 2024 for 6. A gap is never read as zero.",
+     "ok": true,
+     "text": "Each product: latest survey year with all 27 countries"
+    },
+    {
+     "ok": true,
+     "text": "Buying abroad: 2023, the latest year for all 27"
+    },
+    {
+     "ok": true,
+     "text": "Population 16–74 matched to each survey year (2024, 2025)"
+    },
+    {
+     "detail": "France provisional, Poland estimated and provisional, Romania estimated",
+     "ok": true,
+     "text": "Eurostat flags shown (France, Poland, Romania)"
+    }
+   ],
+   "fresh": true,
+   "population": {
+    "2024": {
+     "AT": {
+      "flags": "",
+      "value": 6870010
+     },
+     "BE": {
+      "flags": "",
+      "value": 8632161
+     },
+     "BG": {
+      "flags": "",
+      "value": 4808256
+     },
+     "CY": {
+      "flags": "",
+      "value": 732370
+     },
+     "CZ": {
+      "flags": "",
+      "value": 8058630
+     },
+     "DE": {
+      "flags": "",
+      "value": 61896720
+     },
+     "DK": {
+      "flags": "",
+      "value": 4344331
+     },
+     "EE": {
+      "flags": "",
+      "value": 1008538
+     },
+     "EL": {
+      "flags": "",
+      "value": 7683062
+     },
+     "ES": {
+      "flags": "",
+      "value": 36722448
+     },
+     "FI": {
+      "flags": "",
+      "value": 4081337
+     },
+     "FR": {
+      "flags": "p",
+      "value": 49046448
+     },
+     "HR": {
+      "flags": "",
+      "value": 2907839
+     },
+     "HU": {
+      "flags": "",
+      "value": 7275147
+     },
+     "IE": {
+      "flags": "",
+      "value": 3900544
+     },
+     "IT": {
+      "flags": "",
+      "value": 43773503
+     },
+     "LT": {
+      "flags": "",
+      "value": 2171572
+     },
+     "LU": {
+      "flags": "",
+      "value": 514040
+     },
+     "LV": {
+      "flags": "",
+      "value": 1383521
+     },
+     "MT": {
+      "flags": "",
+      "value": 442226
+     },
+     "NL": {
+      "flags": "",
+      "value": 13323402
+     },
+     "PL": {
+      "flags": "ep",
+      "value": 27766764
+     },
+     "PT": {
+      "flags": "",
+      "value": 8382684
+     },
+     "RO": {
+      "flags": "e",
+      "value": 14310618
+     },
+     "SE": {
+      "flags": "",
+      "value": 7506317
+     },
+     "SI": {
+      "flags": "",
+      "value": 1583889
+     },
+     "SK": {
+      "flags": "",
+      "value": 4126629
+     }
+    },
+    "2025": {
+     "AT": {
+      "flags": "",
+      "value": 6893105
+     },
+     "BE": {
+      "flags": "",
+      "value": 8686363
+     },
+     "BG": {
+      "flags": "",
+      "value": 4781382
+     },
+     "CY": {
+      "flags": "",
+      "value": 742479
+     },
+     "CZ": {
+      "flags": "",
+      "value": 8064373
+     },
+     "DE": {
+      "flags": "",
+      "value": 61953361
+     },
+     "DK": {
+      "flags": "",
+      "value": 4367896
+     },
+     "EE": {
+      "flags": "",
+      "value": 1006978
+     },
+     "EL": {
+      "flags": "",
+      "value": 7698680
+     },
+     "ES": {
+      "flags": "",
+      "value": 37214448
+     },
+     "FI": {
+      "flags": "",
+      "value": 4097796
+     },
+     "FR": {
+      "flags": "p",
+      "value": 49160864
+     },
+     "HR": {
+      "flags": "",
+      "value": 2917293
+     },
+     "HU": {
+      "flags": "",
+      "value": 7227019
+     },
+     "IE": {
+      "flags": "",
+      "value": 3976980
+     },
+     "IT": {
+      "flags": "",
+      "value": 43775048
+     },
+     "LT": {
+      "flags": "",
+      "value": 2178680
+     },
+     "LU": {
+      "flags": "",
+      "value": 521368
+     },
+     "LV": {
+      "flags": "",
+      "value": 1372743
+     },
+     "MT": {
+      "flags": "",
+      "value": 450489
+     },
+     "NL": {
+      "flags": "",
+      "value": 13383113
+     },
+     "PL": {
+      "flags": "ep",
+      "value": 27648670
+     },
+     "PT": {
+      "flags": "",
+      "value": 8526257
+     },
+     "RO": {
+      "flags": "e",
+      "value": 14307094
+     },
+     "SE": {
+      "flags": "",
+      "value": 7531518
+     },
+     "SI": {
+      "flags": "",
+      "value": 1588254
+     },
+     "SK": {
+      "flags": "",
+      "value": 4111709
+     }
+    }
+   },
+   "products": [
+    {
+     "buyers": {
+      "AT": 4532906,
+      "BE": 5789461,
+      "BG": 1661530,
+      "CY": 432197,
+      "CZ": 6082957,
+      "DE": 43621361,
+      "DK": 3578617,
+      "EE": 672460,
+      "EL": 4838620,
+      "ES": 22198418,
+      "FI": 2789780,
+      "FR": 34565003,
+      "HR": 1491612,
+      "HU": 3958238,
+      "IE": 3478664,
+      "IT": 19169094,
+      "LT": 1165812,
+      "LU": 360317,
+      "LV": 745674,
+      "MT": 281466,
+      "NL": 11561671,
+      "PL": 15646382,
+      "PT": 4228171,
+      "RO": 5941736,
+      "SE": 6035005,
+      "SI": 844951,
+      "SK": 2752378
+     },
+     "dataset": "isoc_ec_ib20",
+     "flags": {},
+     "indicator": "I_BUY3",
+     "key": "all",
+     "kind": "any",
+     "label": "Anything",
+     "phrase": "bought something online",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 65.76,
+      "BE": 66.65,
+      "BG": 34.75,
+      "CY": 58.21,
+      "CZ": 75.43,
+      "DE": 70.41,
+      "DK": 81.93,
+      "EE": 66.78,
+      "EL": 62.85,
+      "ES": 59.65,
+      "FI": 68.08,
+      "FR": 70.31,
+      "HR": 51.13,
+      "HU": 54.77,
+      "IE": 87.47,
+      "IT": 43.79,
+      "LT": 53.51,
+      "LU": 69.11,
+      "LV": 54.32,
+      "MT": 62.48,
+      "NL": 86.39,
+      "PL": 56.59,
+      "PT": 49.59,
+      "RO": 41.53,
+      "SE": 80.13,
+      "SI": 53.2,
+      "SK": 66.94
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2025
+    },
+    {
+     "buyers": {
+      "AT": 3005629,
+      "BE": 4004459,
+      "BG": 1265533,
+      "CY": 376585,
+      "CZ": 3619937,
+      "DE": 30001340,
+      "DK": 2581836,
+      "EE": 364486,
+      "EL": 3147751,
+      "ES": 14924003,
+      "FI": 1639065,
+      "FR": 22610413,
+      "HR": 1159646,
+      "HU": 2860588,
+      "IE": 2607514,
+      "IT": 11722544,
+      "LT": 702504,
+      "LU": 218878,
+      "LV": 392367,
+      "MT": 182993,
+      "NL": 8542965,
+      "PL": 11575964,
+      "PT": 3001001,
+      "RO": 4015559,
+      "SE": 4021885,
+      "SI": 574635,
+      "SK": 1904439
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BCLOT1",
+     "key": "clothes",
+     "kind": "physical",
+     "label": "Clothes and shoes",
+     "phrase": "bought clothes, shoes or accessories online",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 43.75,
+      "BE": 46.39,
+      "BG": 26.32,
+      "CY": 51.42,
+      "CZ": 44.92,
+      "DE": 48.47,
+      "DK": 59.43,
+      "EE": 36.14,
+      "EL": 40.97,
+      "ES": 40.64,
+      "FI": 40.16,
+      "FR": 46.1,
+      "HR": 39.88,
+      "HU": 39.32,
+      "IE": 66.85,
+      "IT": 26.78,
+      "LT": 32.35,
+      "LU": 42.58,
+      "LV": 28.36,
+      "MT": 41.38,
+      "NL": 64.12,
+      "PL": 41.69,
+      "PT": 35.8,
+      "RO": 28.06,
+      "SE": 53.58,
+      "SI": 36.28,
+      "SK": 46.15
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2024
+    },
+    {
+     "buyers": {
+      "AT": 1341026,
+      "BE": 1559831,
+      "BG": 524100,
+      "CY": 147206,
+      "CZ": 1892972,
+      "DE": 12125567,
+      "DK": 1282012,
+      "EE": 197169,
+      "EL": 1147849,
+      "ES": 7630925,
+      "FI": 787698,
+      "FR": 8730268,
+      "HR": 404480,
+      "HU": 1354632,
+      "IE": 1402636,
+      "IT": 4815085,
+      "LT": 380242,
+      "LU": 118486,
+      "LV": 163947,
+      "MT": 58374,
+      "NL": 4495316,
+      "PL": 6005951,
+      "PT": 1286742,
+      "RO": 1764499,
+      "SE": 2163321,
+      "SI": 211924,
+      "SK": 766315
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BCBW",
+     "key": "beauty",
+     "kind": "physical",
+     "label": "Beauty and wellness",
+     "phrase": "bought cosmetics, beauty or wellness products online",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 19.52,
+      "BE": 18.07,
+      "BG": 10.9,
+      "CY": 20.1,
+      "CZ": 23.49,
+      "DE": 19.59,
+      "DK": 29.51,
+      "EE": 19.55,
+      "EL": 14.94,
+      "ES": 20.78,
+      "FI": 19.3,
+      "FR": 17.8,
+      "HR": 13.91,
+      "HU": 18.62,
+      "IE": 35.96,
+      "IT": 11.0,
+      "LT": 17.51,
+      "LU": 23.05,
+      "LV": 11.85,
+      "MT": 13.2,
+      "NL": 33.74,
+      "PL": 21.63,
+      "PT": 15.35,
+      "RO": 12.33,
+      "SE": 28.82,
+      "SI": 13.38,
+      "SK": 18.57
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2024
+    },
+    {
+     "buyers": {
+      "AT": 833332,
+      "BE": 849405,
+      "BG": 332731,
+      "CY": 60787,
+      "CZ": 824398,
+      "DE": 7248106,
+      "DK": 883637,
+      "EE": 108317,
+      "EL": 638462,
+      "ES": 5243966,
+      "FI": 347730,
+      "FR": 5728625,
+      "HR": 308522,
+      "HU": 989420,
+      "IE": 687276,
+      "IT": 1637129,
+      "LT": 283390,
+      "LU": 85690,
+      "LV": 145408,
+      "MT": 47760,
+      "NL": 2630040,
+      "PL": 2490679,
+      "PT": 844136,
+      "RO": 808550,
+      "SE": 987081,
+      "SI": 139699,
+      "SK": 595060
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BEEQU1",
+     "key": "electronics",
+     "kind": "physical",
+     "label": "Electronics and appliances",
+     "phrase": "bought consumer electronics or household appliances online",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 12.13,
+      "BE": 9.84,
+      "BG": 6.92,
+      "CY": 8.3,
+      "CZ": 10.23,
+      "DE": 11.71,
+      "DK": 20.34,
+      "EE": 10.74,
+      "EL": 8.31,
+      "ES": 14.28,
+      "FI": 8.52,
+      "FR": 11.68,
+      "HR": 10.61,
+      "HU": 13.6,
+      "IE": 17.62,
+      "IT": 3.74,
+      "LT": 13.05,
+      "LU": 16.67,
+      "LV": 10.51,
+      "MT": 10.8,
+      "NL": 19.74,
+      "PL": 8.97,
+      "PT": 10.07,
+      "RO": 5.65,
+      "SE": 13.15,
+      "SI": 8.82,
+      "SK": 14.42
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2024
+    },
+    {
+     "buyers": {
+      "AT": 1184390,
+      "BE": 1233536,
+      "BG": 331289,
+      "CY": 235457,
+      "CZ": 1340150,
+      "DE": 10479115,
+      "DK": 864956,
+      "EE": 111645,
+      "EL": 974981,
+      "ES": 6154682,
+      "FI": 640770,
+      "FR": 6856693,
+      "HR": 309394,
+      "HU": 1036708,
+      "IE": 1019212,
+      "IT": 4066558,
+      "LT": 169817,
+      "LU": 76746,
+      "LV": 94356,
+      "MT": 53332,
+      "NL": 3134996,
+      "PL": 1754859,
+      "PT": 1163517,
+      "RO": 736997,
+      "SE": 1128199,
+      "SI": 95350,
+      "SK": 411425
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BHARD1",
+     "key": "computers",
+     "kind": "physical",
+     "label": "Computers and phones",
+     "phrase": "bought computers, tablets, phones or accessories online",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 17.24,
+      "BE": 14.29,
+      "BG": 6.89,
+      "CY": 32.15,
+      "CZ": 16.63,
+      "DE": 16.93,
+      "DK": 19.91,
+      "EE": 11.07,
+      "EL": 12.69,
+      "ES": 16.76,
+      "FI": 15.7,
+      "FR": 13.98,
+      "HR": 10.64,
+      "HU": 14.25,
+      "IE": 26.13,
+      "IT": 9.29,
+      "LT": 7.82,
+      "LU": 14.93,
+      "LV": 6.82,
+      "MT": 12.06,
+      "NL": 23.53,
+      "PL": 6.32,
+      "PT": 13.88,
+      "RO": 5.15,
+      "SE": 15.03,
+      "SI": 6.02,
+      "SK": 9.97
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2024
+    },
+    {
+     "buyers": {
+      "AT": 1528577,
+      "BE": 1181743,
+      "BG": 232720,
+      "CY": 63204,
+      "CZ": 1216853,
+      "DE": 14180539,
+      "DK": 1289397,
+      "EE": 135144,
+      "EL": 524753,
+      "ES": 7069071,
+      "FI": 671788,
+      "FR": 10824551,
+      "HR": 347778,
+      "HU": 1024341,
+      "IE": 1118286,
+      "IT": 6977496,
+      "LT": 206516,
+      "LU": 96331,
+      "LV": 134202,
+      "MT": 80176,
+      "NL": 3673262,
+      "PL": 3187625,
+      "PT": 1148428,
+      "RO": 482268,
+      "SE": 1541047,
+      "SI": 239484,
+      "SK": 690798
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BFURN1",
+     "key": "home",
+     "kind": "physical",
+     "label": "Furniture and home",
+     "phrase": "bought furniture, home accessories or garden products online",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 22.25,
+      "BE": 13.69,
+      "BG": 4.84,
+      "CY": 8.63,
+      "CZ": 15.1,
+      "DE": 22.91,
+      "DK": 29.68,
+      "EE": 13.4,
+      "EL": 6.83,
+      "ES": 19.25,
+      "FI": 16.46,
+      "FR": 22.07,
+      "HR": 11.96,
+      "HU": 14.08,
+      "IE": 28.67,
+      "IT": 15.94,
+      "LT": 9.51,
+      "LU": 18.74,
+      "LV": 9.7,
+      "MT": 18.13,
+      "NL": 27.57,
+      "PL": 11.48,
+      "PT": 13.7,
+      "RO": 3.37,
+      "SE": 20.53,
+      "SI": 15.12,
+      "SK": 16.74
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2024
+    },
+    {
+     "buyers": {
+      "AT": 968671,
+      "BE": 1065209,
+      "BG": 524581,
+      "CY": 121647,
+      "CZ": 1819639,
+      "DE": 11723239,
+      "DK": 771119,
+      "EE": 103476,
+      "EL": 1508185,
+      "ES": 7050710,
+      "FI": 957074,
+      "FR": 6694840,
+      "HR": 325678,
+      "HU": 991603,
+      "IE": 843688,
+      "IT": 3970257,
+      "LT": 141152,
+      "LU": 67185,
+      "LV": 68899,
+      "MT": 69827,
+      "NL": 4238174,
+      "PL": 2682269,
+      "PT": 1153457,
+      "RO": 1064710,
+      "SE": 1426200,
+      "SI": 224595,
+      "SK": 670577
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BSPG",
+     "key": "sports",
+     "kind": "physical",
+     "label": "Sports goods",
+     "phrase": "bought sports goods online",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 14.1,
+      "BE": 12.34,
+      "BG": 10.91,
+      "CY": 16.61,
+      "CZ": 22.58,
+      "DE": 18.94,
+      "DK": 17.75,
+      "EE": 10.26,
+      "EL": 19.63,
+      "ES": 19.2,
+      "FI": 23.45,
+      "FR": 13.65,
+      "HR": 11.2,
+      "HU": 13.63,
+      "IE": 21.63,
+      "IT": 9.07,
+      "LT": 6.5,
+      "LU": 13.07,
+      "LV": 4.98,
+      "MT": 15.79,
+      "NL": 31.81,
+      "PL": 9.66,
+      "PT": 13.76,
+      "RO": 7.44,
+      "SE": 19.0,
+      "SI": 14.18,
+      "SK": 16.25
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2024
+    },
+    {
+     "buyers": {
+      "AT": 1423426,
+      "BE": 1112723,
+      "BG": 217075,
+      "CY": 50563,
+      "CZ": 485475,
+      "DE": 7874272,
+      "DK": 1043490,
+      "EE": 248824,
+      "EL": 584330,
+      "ES": 8109028,
+      "FI": 539270,
+      "FR": 5417527,
+      "HR": 231050,
+      "HU": 654768,
+      "IE": 1096453,
+      "IT": 1877950,
+      "LT": 229415,
+      "LU": 118976,
+      "LV": 98563,
+      "MT": 70141,
+      "NL": 2967036,
+      "PL": 3254248,
+      "PT": 799763,
+      "RO": 928530,
+      "SE": 1473165,
+      "SI": 97201,
+      "SK": 360597
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BSOFT2",
+     "key": "software",
+     "kind": "digital",
+     "label": "Software downloads",
+     "phrase": "bought software as a download",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 20.65,
+      "BE": 12.81,
+      "BG": 4.54,
+      "CY": 6.81,
+      "CZ": 6.02,
+      "DE": 12.71,
+      "DK": 23.89,
+      "EE": 24.71,
+      "EL": 7.59,
+      "ES": 21.79,
+      "FI": 13.16,
+      "FR": 11.02,
+      "HR": 7.92,
+      "HU": 9.06,
+      "IE": 27.57,
+      "IT": 4.29,
+      "LT": 10.53,
+      "LU": 22.82,
+      "LV": 7.18,
+      "MT": 15.57,
+      "NL": 22.17,
+      "PL": 11.77,
+      "PT": 9.38,
+      "RO": 6.49,
+      "SE": 19.56,
+      "SI": 6.12,
+      "SK": 8.77
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2025
+    },
+    {
+     "buyers": {
+      "AT": 1107033,
+      "BE": 1111854,
+      "BG": 189821,
+      "CY": 40688,
+      "CZ": 593538,
+      "DE": 7651240,
+      "DK": 1007237,
+      "EE": 150443,
+      "EL": 702120,
+      "ES": 6158991,
+      "FI": 677775,
+      "FR": 7777249,
+      "HR": 168911,
+      "HU": 698853,
+      "IE": 910728,
+      "IT": 2035540,
+      "LT": 180177,
+      "LU": 84618,
+      "LV": 81404,
+      "MT": 56221,
+      "NL": 2582941,
+      "PL": 1476439,
+      "PT": 669311,
+      "RO": 486441,
+      "SE": 1560531,
+      "SI": 91483,
+      "SK": 349084
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BGAMES2",
+     "key": "games",
+     "kind": "digital",
+     "label": "Game downloads",
+     "phrase": "bought games as a download",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 16.06,
+      "BE": 12.8,
+      "BG": 3.97,
+      "CY": 5.48,
+      "CZ": 7.36,
+      "DE": 12.35,
+      "DK": 23.06,
+      "EE": 14.94,
+      "EL": 9.12,
+      "ES": 16.55,
+      "FI": 16.54,
+      "FR": 15.82,
+      "HR": 5.79,
+      "HU": 9.67,
+      "IE": 22.9,
+      "IT": 4.65,
+      "LT": 8.27,
+      "LU": 16.23,
+      "LV": 5.93,
+      "MT": 12.48,
+      "NL": 19.3,
+      "PL": 5.34,
+      "PT": 7.85,
+      "RO": 3.4,
+      "SE": 20.72,
+      "SI": 5.76,
+      "SK": 8.49
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2025
+    },
+    {
+     "buyers": {
+      "AT": 1023626,
+      "BE": 448216,
+      "BG": 138182,
+      "CY": 17745,
+      "CZ": 554022,
+      "DE": 6003281,
+      "DK": 552102,
+      "EE": 68978,
+      "EL": 103162,
+      "ES": 2541747,
+      "FI": 825296,
+      "FR": 1420749,
+      "HR": 43176,
+      "HU": 389536,
+      "IE": 501099,
+      "IT": 1085621,
+      "LT": 86276,
+      "LU": 63815,
+      "LV": 55871,
+      "MT": 63249,
+      "NL": 2668593,
+      "PL": 1387963,
+      "PT": 457860,
+      "RO": 376277,
+      "SE": 881188,
+      "SI": 40183,
+      "SK": 181326
+     },
+     "dataset": "isoc_ec_ibgs",
+     "flags": {},
+     "indicator": "I_BAPP2",
+     "key": "apps",
+     "kind": "digital",
+     "label": "App subscriptions",
+     "phrase": "had a paid app subscription (e.g. language, travel, weather)",
+     "population_flags": {
+      "FR": "p",
+      "PL": "ep",
+      "RO": "e"
+     },
+     "share": {
+      "AT": 14.85,
+      "BE": 5.16,
+      "BG": 2.89,
+      "CY": 2.39,
+      "CZ": 6.87,
+      "DE": 9.69,
+      "DK": 12.64,
+      "EE": 6.85,
+      "EL": 1.34,
+      "ES": 6.83,
+      "FI": 20.14,
+      "FR": 2.89,
+      "HR": 1.48,
+      "HU": 5.39,
+      "IE": 12.6,
+      "IT": 2.48,
+      "LT": 3.96,
+      "LU": 12.24,
+      "LV": 4.07,
+      "MT": 14.04,
+      "NL": 19.94,
+      "PL": 5.02,
+      "PT": 5.37,
+      "RO": 2.63,
+      "SE": 11.7,
+      "SI": 2.53,
+      "SK": 4.41
+     },
+     "updated": "2026-04-17T11:00:00+0200",
+     "year": 2025
+    }
+   ],
+   "pulled_at": "2026-11-20T20:05Z",
+   "table_page": "https://ec.europa.eu/eurostat/databrowser/view/{dataset}/default/table?lang=en",
+   "updated": {
+    "demo_pjan": "2026-11-19T23:00:00+0100",
+    "isoc_ec_ib20": "2026-04-17T11:00:00+0200",
+    "isoc_ec_ibgs": "2026-04-17T11:00:00+0200",
+    "isoc_ec_ibos": "2026-04-17T11:00:00+0200"
+   }
+  },
+  "fx": {
+   "amount": 100000,
+   "checks": [
+    {
+     "detail": "65 working days from 2026-08-24: CZK, DKK, HUF, PLN, RON, SEK",
+     "ok": true,
+     "text": "ECB rates to 2026-11-20; all 6 non-euro currencies"
+    },
+    {
+     "ok": true,
+     "text": "No one-day move over 10% (a sign of a bad feed)"
+    }
+   ],
+   "days": 65,
+   "first": "2026-08-24",
+   "fresh": true,
+   "latest": "2026-11-20",
+   "page": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html",
+   "per_amount": {
+    "CZK": {
+     "GBP": {
+      "date": "2026-11-20",
+      "high": 3554.9142548685795,
+      "low": 3415.4842942672026,
+      "now": 3422.085087253259,
+      "range_pct": 4.082289613669322
+     },
+     "USD": {
+      "date": "2026-11-20",
+      "high": 4845.326578914587,
+      "low": 4491.397278188729,
+      "now": 4491.397278188729,
+      "range_pct": 7.880160199691565
+     }
+    },
+    "DKK": {
+     "GBP": {
+      "date": "2026-11-20",
+      "high": 11512.99066170765,
+      "low": 11143.369367440864,
+      "now": 11202.606159526931,
+      "range_pct": 3.3169617023264104
+     },
+     "USD": {
+      "date": "2026-11-20",
+      "high": 15609.240606230855,
+      "low": 14674.087552178102,
+      "now": 14703.127926578012,
+      "range_pct": 6.372819098479117
+     }
+    },
+    "EUR": {
+     "GBP": {
+      "date": "2026-11-20",
+      "high": 86055.0,
+      "low": 83290.0,
+      "now": 83735.0,
+      "range_pct": 3.31972625765398
+     },
+     "USD": {
+      "date": "2026-11-20",
+      "high": 116690.0,
+      "low": 109680.0,
+      "now": 109900.0,
+      "range_pct": 6.391320204230489
+     }
+    },
+    "HUF": {
+     "GBP": {
+      "date": "2026-11-20",
+      "high": 237.69504136820478,
+      "low": 224.16008566456966,
+      "now": 224.16008566456966,
+      "range_pct": 6.038075718747118
+     },
+     "USD": {
+      "date": "2026-11-20",
+      "high": 323.97690043866953,
+      "low": 294.20425645830545,
+      "now": 294.20425645830545,
+      "range_pct": 10.119718979858964
+     }
+    },
+    "PLN": {
+     "GBP": {
+      "date": "2026-11-20",
+      "high": 19930.857874519847,
+      "low": 18781.82266783303,
+      "now": 18781.82266783303,
+      "range_pct": 6.117804576308403
+     },
+     "USD": {
+      "date": "2026-11-20",
+      "high": 27165.63845885229,
+      "low": 24650.651593656774,
+      "now": 24650.651593656774,
+      "range_pct": 10.20251677989187
+     }
+    },
+    "RON": {
+     "GBP": {
+      "date": "2026-11-20",
+      "high": 16380.820040354818,
+      "low": 15576.26865113496,
+      "now": 15653.44998411007,
+      "range_pct": 5.165238268802165
+     },
+     "USD": {
+      "date": "2026-11-20",
+      "high": 22215.45025140942,
+      "low": 20513.58782052481,
+      "now": 20544.74417213467,
+      "range_pct": 8.296269018244672
+     }
+    },
+    "SEK": {
+     "GBP": {
+      "date": "2026-11-20",
+      "high": 7738.209990540967,
+      "low": 7468.004459308807,
+      "now": 7468.004459308807,
+      "range_pct": 3.6181758152989714
+     },
+     "USD": {
+      "date": "2026-11-20",
+      "high": 10537.824845483787,
+      "low": 9801.560758082496,
+      "now": 9801.560758082496,
+      "range_pct": 7.511702529560482
+     }
+    }
+   },
+   "pulled_at": "2026-11-20T20:05Z"
+  },
+  "vat": {
+   "checks": [
+    {
+     "ok": true,
+     "text": "All 27 standard VAT rates match the open VAT list"
+    },
+    {
+     "ok": true,
+     "text": "Greece matched across codes EL and GR"
+    },
+    {
+     "ok": true,
+     "text": "Spain: Canary Islands 7% kept apart from 21%"
+    },
+    {
+     "detail": "Estonia, Finland, Luxembourg, Romania, Slovakia",
+     "ok": true,
+     "text": "Rate changes since 2023 confirmed in the EU database (5)"
+    }
+   ],
+   "fresh": true,
+   "open_list_page": "https://github.com/ibericode/vat-rates",
+   "pulled_at": "2026-11-20T20:05Z",
+   "rates": {
+    "AT": {
+     "change": null,
+     "rate": 20.0,
+     "regional": []
+    },
+    "BE": {
+     "change": null,
+     "rate": 21.0,
+     "regional": []
+    },
+    "BG": {
+     "change": null,
+     "rate": 20.0,
+     "regional": []
+    },
+    "CY": {
+     "change": null,
+     "rate": 19.0,
+     "regional": []
+    },
+    "CZ": {
+     "change": null,
+     "rate": 21.0,
+     "regional": []
+    },
+    "DE": {
+     "change": null,
+     "rate": 19.0,
+     "regional": []
+    },
+    "DK": {
+     "change": null,
+     "rate": 25.0,
+     "regional": []
+    },
+    "EE": {
+     "change": {
+      "date": "2025-07-01",
+      "from": 22.0,
+      "to": 24.0
+     },
+     "rate": 24.0,
+     "regional": []
+    },
+    "EL": {
+     "change": null,
+     "rate": 24.0,
+     "regional": []
+    },
+    "ES": {
+     "change": null,
+     "rate": 21.0,
+     "regional": [
+      {
+       "note": "which are outside the EU VAT area",
+       "phrase": "for the Canary Islands",
+       "rate": 7.0,
+       "region": "Canary Islands"
+      }
+     ]
+    },
+    "FI": {
+     "change": {
+      "date": "2024-09-01",
+      "from": 24.0,
+      "to": 25.5
+     },
+     "rate": 25.5,
+     "regional": []
+    },
+    "FR": {
+     "change": null,
+     "rate": 20.0,
+     "regional": []
+    },
+    "HR": {
+     "change": null,
+     "rate": 25.0,
+     "regional": []
+    },
+    "HU": {
+     "change": null,
+     "rate": 27.0,
+     "regional": []
+    },
+    "IE": {
+     "change": null,
+     "rate": 23.0,
+     "regional": []
+    },
+    "IT": {
+     "change": null,
+     "rate": 22.0,
+     "regional": []
+    },
+    "LT": {
+     "change": null,
+     "rate": 21.0,
+     "regional": []
+    },
+    "LU": {
+     "change": {
+      "date": "2024-01-01",
+      "from": 16.0,
+      "to": 17.0
+     },
+     "rate": 17.0,
+     "regional": []
+    },
+    "LV": {
+     "change": null,
+     "rate": 21.0,
+     "regional": []
+    },
+    "MT": {
+     "change": null,
+     "rate": 18.0,
+     "regional": []
+    },
+    "NL": {
+     "change": null,
+     "rate": 21.0,
+     "regional": []
+    },
+    "PL": {
+     "change": null,
+     "rate": 23.0,
+     "regional": []
+    },
+    "PT": {
+     "change": null,
+     "rate": 23.0,
+     "regional": []
+    },
+    "RO": {
+     "change": {
+      "date": "2025-08-01",
+      "from": 19.0,
+      "to": 21.0
+     },
+     "rate": 21.0,
+     "regional": []
+    },
+    "SE": {
+     "change": null,
+     "rate": 25.0,
+     "regional": []
+    },
+    "SI": {
+     "change": null,
+     "rate": 22.0,
+     "regional": []
+    },
+    "SK": {
+     "change": {
+      "date": "2025-01-01",
+      "from": 20.0,
+      "to": 23.0
+     },
+     "rate": 23.0,
+     "regional": []
+    }
+   },
+   "tedb_page": "https://ec.europa.eu/taxation_customs/tedb/"
+  }
+ },
+ "warnings": []
+}
