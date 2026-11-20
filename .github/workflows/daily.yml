@@ -48,8 +48,12 @@ jobs:
             git push
           fi
 
+      - name: Show the data in the log (branches other than main, for review)
+        if: github.ref != 'refs/heads/main'
+        run: python -c "import json; print('DATA_JSON ' + json.dumps(json.load(open('data/latest.json')), separators=(',', ':')))"
+
       - name: Keep the built page and data for download
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site-and-data
           path: |
@@ -60,7 +64,7 @@ jobs:
 
       - name: Package the page for GitHub Pages
         if: github.ref == 'refs/heads/main'
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v5
         with:
           path: site
 
@@ -76,7 +80,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
 
   # The page still goes up when a source fails (with that source's last good data and a notice),
   # but the run is marked as failed so the problem gets noticed.
