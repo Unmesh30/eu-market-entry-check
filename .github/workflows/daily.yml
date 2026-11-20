@@ -1,0 +1,90 @@
+name: Daily update
+
+on:
+  schedule:
+    - cron: "41 16 * * *" # every day, after the ECB publishes its reference rates (around 16:00 CET)
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # to save the day's data on main
+    outputs:
+      warnings: ${{ steps.build.outputs.warnings }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install the test tools
+        run: pip install -r requirements-dev.txt
+
+      - name: Run the tests
+        run: python -m pytest -q
+
+      - name: Pull the data, check it and build the page
+        id: build
+        run: python -m pipeline.build --data data/latest.json --out site
+
+      - name: Save today's data
+        if: github.ref == 'refs/heads/main'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Daily data: $(date -u +%F)"
+            git push
+          fi
+
+      - name: Keep the built page and data for download
+        uses: actions/upload-artifact@v4
+        with:
+          name: site-and-data
+          path: |
+            site
+            data/latest.json
+          include-hidden-files: true
+          retention-days: 14
+
+      - name: Package the page for GitHub Pages
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  # The page still goes up when a source fails (with that source's last good data and a notice),
+  # but the run is marked as failed so the problem gets noticed.
+  flag-fallbacks:
+    needs: [build, deploy]
+    if: always() && needs.build.result == 'success' && needs.build.outputs.warnings != '0'
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          echo "::error::A source failed its checks today, so the page is showing its last good data. See the build step's warnings."
+          exit 1
