@@ -425,7 +425,7 @@ const DATA = __DATA__;
 
     const notes = [];
     for (const r of vat.regional) {
-      notes.push(esc(`The EU tax database also lists ${r.rate}% for the ${r.region}${r.note ? ", " + r.note : ""}.`));
+      notes.push(esc(`The EU tax database also lists ${r.rate}% ${r.phrase}${r.note ? ", " + r.note : ""}.`));
     }
     if (currency !== "EUR") {
       notes.push(esc(`${country.name} uses the ${DATA.currency_names[currency]} (${currency}), so the currency figures are for ${currency}.`));

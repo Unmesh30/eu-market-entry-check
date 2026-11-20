@@ -4,7 +4,9 @@ Source of record: the European Commission's Taxes in Europe Database (TEDB), thr
 VAT retrieval web service. Second source: the open VAT list ibericode/vat-rates. The two must agree
 on every country before anything is published.
 """
+import html
 import json
+import re
 import xml.etree.ElementTree as ET
 from datetime import date, timedelta
 
@@ -22,8 +24,12 @@ OPEN_VAT_LIST_PAGE = "https://github.com/ibericode/vat-rates"
 
 CHANGE_WINDOW_DAYS = 3 * 365 + 1  # standard-rate changes from the last three years are shown
 
-# A fact the database's own note doesn't spell out, added to its regional entry.
-REGION_NOTES = {"Canary Islands": "which are outside the EU VAT area"}
+# How to describe labelled entries on the page. The note adds a fact the database's label doesn't spell out.
+LABELS = {"Canary Islands": {"phrase": "for the Canary Islands", "note": "which are outside the EU VAT area"}}
+
+# The database labels special entries "VAT - <region or scheme> - " (e.g. Canary Islands, Import).
+# Its other comments are legal references or notes about the main rate.
+LABEL_PATTERN = re.compile(r"^VAT\s*-\s*(?P<label>.+?)\s*-?\s*$")
 
 MIN_RATE, MAX_RATE = 15.0, 30.0  # EU law sets a 15% floor for the standard rate
 
@@ -78,17 +84,23 @@ def parse_tedb(body):
     return records
 
 
-def region_name(comment):
-    """'VAT - Canary Islands - ' -> 'Canary Islands'."""
-    parts = [part.strip(" -") for part in comment.split(" - ")]
-    return ", ".join(p for p in parts if p and p.upper() != "VAT") or comment.strip(" -")
+def plain_text(comment):
+    """A database comment without its HTML."""
+    return " ".join(html.unescape(re.sub(r"<[^>]+>", " ", comment or "")).split())
+
+
+def label_of(comment):
+    """'VAT - Canary Islands - ' -> 'Canary Islands'. Legal references and other notes have no label."""
+    match = LABEL_PATTERN.match(plain_text(comment))
+    return match.group("label").strip() if match else ""
 
 
 def standard_rates(records, codes):
-    """Mainland standard rate per country, plus any regional standard rates the database lists.
+    """The main standard rate per country, plus labelled standard rates that differ from it.
 
-    The database can list more than one STANDARD rate for a country (Spain: 21%, and 7% for the
-    Canary Islands). The mainland rate is the one without a regional note; there must be exactly one.
+    The database can list more than one STANDARD rate for a country: Spain has 21% and a 7% entry
+    labelled "VAT - Canary Islands", and Germany has a 19% entry labelled "VAT - Import". The main rate
+    is the unlabelled one (its comment, if any, is a legal reference) and there must be exactly one.
     """
     result = {}
     for code in codes:
@@ -96,15 +108,25 @@ def standard_rates(records, codes):
             r for r in records
             if r["country"] == code and r["type"] == "STANDARD" and r["rate_type"] == "DEFAULT" and r["value"] is not None
         ]
-        mainland = sorted({r["value"] for r in standard if not r["comment"]})
-        if len(mainland) != 1:
-            raise DataError(
-                f"{EU27[code][0]}: expected one standard VAT rate without a regional note, found {mainland or 'none'}"
-            )
-        regional = sorted({(region_name(r["comment"]), r["value"]) for r in standard if r["comment"]})
+        main = sorted({r["value"] for r in standard if not label_of(r["comment"])})
+        if len(main) != 1:
+            found = "; ".join(f"{r['value']:g}% {label_of(r['comment']) or 'unlabelled'}" for r in standard) or "nothing"
+            raise DataError(f"{EU27[code][0]}: expected one main standard VAT rate, found {found}")
+        labelled = sorted({
+            (label_of(r["comment"]), r["value"]) for r in standard
+            if label_of(r["comment"]) and r["value"] != main[0]
+        })
         result[code] = {
-            "rate": mainland[0],
-            "regional": [{"region": n, "rate": v, "note": REGION_NOTES.get(n, "")} for n, v in regional],
+            "rate": main[0],
+            "regional": [
+                {
+                    "region": label,
+                    "rate": value,
+                    "phrase": LABELS.get(label, {}).get("phrase", f'labelled "{label}"'),
+                    "note": LABELS.get(label, {}).get("note", ""),
+                }
+                for label, value in labelled
+            ],
             "change": None,
         }
     return result

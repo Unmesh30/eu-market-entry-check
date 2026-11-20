@@ -9,25 +9,45 @@ from pipeline.errors import DataError
 from conftest import World
 
 
-def test_spain_mainland_rate_is_kept_apart_from_the_canary_islands(world):
-    records = vat.parse_tedb(world.tedb(vat.soap_request(["ES"], date(2026, 11, 20))))
-    spain = vat.standard_rates(records, ["ES"])["ES"]
+def rates_for(world, codes):
+    return vat.standard_rates(vat.parse_tedb(world.tedb(vat.soap_request(codes, date(2026, 11, 20)))), codes)
+
+
+def test_spain_main_rate_is_kept_apart_from_the_canary_islands(world):
+    spain = rates_for(world, ["ES"])["ES"]
     assert spain["rate"] == 21.0
-    assert spain["regional"] == [{"region": "Canary Islands", "rate": 7.0, "note": "which are outside the EU VAT area"}]
+    assert spain["regional"] == [{
+        "region": "Canary Islands", "rate": 7.0,
+        "phrase": "for the Canary Islands", "note": "which are outside the EU VAT area",
+    }]
 
 
-def test_two_mainland_standard_rates_is_an_error():
+def test_legal_references_do_not_hide_the_main_rate(world):
+    rates = rates_for(world, ["BE", "CZ", "FR", "IE", "LU"])
+    assert {code: entry["rate"] for code, entry in rates.items()} == {"BE": 21.0, "CZ": 21.0, "FR": 20.0, "IE": 23.0, "LU": 17.0}
+    assert all(entry["regional"] == [] for entry in rates.values())
+
+
+def test_a_labelled_entry_at_the_same_rate_is_not_shown(world):
+    germany = rates_for(world, ["DE"])["DE"]  # "VAT - Import" at 19%, like the main rate
+    assert germany["rate"] == 19.0
+    assert germany["regional"] == []
+
+
+def test_two_unlabelled_standard_rates_is_an_error():
     records = [
         {"country": "ES", "type": "STANDARD", "rate_type": "DEFAULT", "value": 21.0, "comment": ""},
-        {"country": "ES", "type": "STANDARD", "rate_type": "DEFAULT", "value": 7.0, "comment": ""},
+        {"country": "ES", "type": "STANDARD", "rate_type": "DEFAULT", "value": 7.0, "comment": "<p>Art. 90</p>"},
     ]
-    with pytest.raises(DataError, match="expected one standard VAT rate"):
+    with pytest.raises(DataError, match="expected one main standard VAT rate"):
         vat.standard_rates(records, ["ES"])
 
 
-def test_region_name_strips_the_database_prefix():
-    assert vat.region_name("VAT - Canary Islands - ") == "Canary Islands"
-    assert vat.region_name("VAT - Canary Islands -") == "Canary Islands"
+def test_labels_are_read_from_the_database_comments():
+    assert vat.label_of("VAT - Canary Islands - ") == "Canary Islands"
+    assert vat.label_of("VAT - Import -") == "Import"
+    assert vat.label_of("<p>Art. 47 of the VAT Act.</p>") == ""
+    assert vat.label_of("") == ""
 
 
 def test_soap_fault_is_an_error():

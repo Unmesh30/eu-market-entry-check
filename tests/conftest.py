@@ -33,6 +33,17 @@ REDUCED_ONLY_PERIODS = {"FI": "2026-01-01", "CZ": "2024-01-01"}
 
 PHYSICAL = {p["indicator"] for p in eurostat.PRODUCTS if p["kind"] == "physical"}
 
+# Comments the EU tax database puts on some countries' main standard rate (as returned in November 2026).
+LEGAL_NOTES = {
+    "BE": "&lt;p&gt;Article 1, paragraph 1, of the Royal Decree n° 20 of 20 July 1970&lt;/p&gt;",
+    "CZ": "&lt;p&gt;Art. 47 of the VAT Act.&lt;/p&gt;",
+    "FR": '&lt;p&gt;&lt;a href="http://bofip.impots.gouv.fr/bofip/1379-PGP" target="_blank"&gt;'
+          "http://bofip.impots.gouv.fr/bofip/1379-PGP&lt;/a&gt;&lt;/p&gt;\n&lt;p&gt;Article 278 of the General Tax Code&lt;/p&gt;",
+    "IE": "&lt;p&gt;The Standard Rate of VAT was temporarily reduced from 23% to 21% from 1 September 2020 to "
+          "28 February 2021. It has been restored to 23% from 1 March 2021.&lt;/p&gt;",
+    "LU": "&lt;p&gt;Art. 39(3) of VAT law&lt;/p&gt;",
+}
+
 
 def jsonstat(dims, cells, status=None, updated="2026-04-17T11:00:00+0200"):
     """A JSON-stat 2.0 dataset like Eurostat's: dims is [(name, [codes])], cells maps code tuples to values."""
@@ -138,9 +149,13 @@ class World:
         records = []
         for code in codes:
             rate = self.tedb_overrides.get((code, on), standard_rate_on(code, on))
-            records.append(self.record(code, "STANDARD", "DEFAULT", rate))
+            # Real quirks: legal references on the main rate, an "Import" entry for Germany at the same
+            # rate, and a separate Canary Islands entry for Spain.
+            records.append(self.record(code, "STANDARD", "DEFAULT", rate, LEGAL_NOTES.get(code, "")))
             if code == "ES":
                 records.append(self.record(code, "STANDARD", "DEFAULT", 7.0, "VAT - Canary Islands - "))
+            if code == "DE":
+                records.append(self.record(code, "STANDARD", "DEFAULT", rate, "VAT - Import - "))
             records.append(self.record(code, "REDUCED", "REDUCED_RATE", 10.0))
         return (
             '<?xml version="1.0" encoding="UTF-8"?><soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/">'
