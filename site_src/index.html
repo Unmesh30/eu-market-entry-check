@@ -143,8 +143,8 @@ footer { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; g
   table.rows { height: calc(100% - 1px); }
   .rows td { height: auto; }
 }
-/* Wide screens up to about 820px tall (most laptops): three columns. */
-@media (min-width: 1100px) and (max-height: 820px) {
+/* Wide screens up to about 880px tall (most laptops): three columns. */
+@media (min-width: 1100px) and (max-height: 880px) {
   main {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr) minmax(0, 0.72fr);
     grid-template-rows: minmax(0, 1fr);
@@ -234,9 +234,9 @@ footer { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; g
       <div class="controls">
         <label><span>What do you sell?</span><select id="product"></select></label>
         <label><span>Rank by</span><select id="sort">
-          <option value="crossborder">People buying from abroad</option>
+          <option value="crossborder">Cross-border buyers</option>
           <option value="buyers">People who bought it</option>
-          <option value="share">Share buying from abroad</option>
+          <option value="share">Cross-border share</option>
         </select></label>
       </div>
       <p class="caption" id="rank-caption"></p>
@@ -413,8 +413,8 @@ const DATA = __DATA__;
     }[sort];
     const heads = {
       buyers: ["People who bought it", "People", "Abroad"],
-      crossborder: ["People buying from abroad", "People", "Share"],
-      share: ["Share buying from abroad", "Share", "People"],
+      crossborder: ["Cross-border buyers", "People", "Share"],
+      share: ["Cross-border share", "Share", "People"],
     }[sort];
     $("th-bar").textContent = heads[0];
     $("th-v1").textContent = heads[1];
