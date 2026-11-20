@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EU market-entry check · Unmesh Achar</title>
+<meta name="description" content="Where to start selling to consumers in the EU, and when your own company beats a merchant of record. Updated daily from Eurostat, the EU tax database and the European Central Bank.">
+<meta property="og:title" content="EU market-entry check">
+<meta property="og:description" content="Where to start selling to consumers in the EU, and when your own company beats a merchant of record. Updated daily from official sources.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='9' width='3.5' height='6' rx='1' fill='%232a78d6'/%3E%3Crect x='6.25' y='5' width='3.5' height='10' rx='1' fill='%232a78d6'/%3E%3Crect x='11.5' y='1' width='3.5' height='14' rx='1' fill='%231c5cab'/%3E%3C/svg%3E">
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f4f4f2;
+  --card: #ffffff;
+  --line: #e3e2de;
+  --ink: #111110;
+  --ink-2: #4b4a46;
+  --muted: #676661;
+  --blue: #2a78d6;
+  --blue-strong: #1c5cab;
+  --blue-soft: #eaf2fc;
+  --blue-ink: #0f3d73;
+  --good: #11751b;
+  --bad: #b42318;
+  --warn-bg: #fff4dc;
+  --warn-ink: #6b4500;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.4 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+a { color: var(--blue-strong); text-decoration: none; }
+a:hover { text-decoration: underline; }
+a:focus-visible, select:focus-visible, tr:focus-visible { outline: 2px solid var(--blue); outline-offset: 1px; }
+.page { max-width: 1500px; margin: 0 auto; padding: 14px 20px 10px; display: flex; flex-direction: column; gap: 10px; }
+.top { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; }
+h1 { margin: 0; font-size: 21px; font-weight: 650; letter-spacing: -0.01em; }
+.sub { margin: 2px 0 0; color: var(--ink-2); }
+.meta { text-align: right; color: var(--muted); font-size: 12.5px; line-height: 1.5; white-space: nowrap; }
+.banner { background: var(--warn-bg); color: var(--warn-ink); border-radius: 8px; padding: 8px 12px; font-size: 13px; }
+.banner p { margin: 0; }
+main { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; min-width: 0; }
+.card-head { display: flex; justify-content: space-between; align-items: center; gap: 8px 12px; flex-wrap: wrap; }
+h2 { margin: 0; font-size: 15px; font-weight: 650; display: flex; align-items: center; gap: 8px; }
+.num {
+  display: inline-grid; place-items: center; flex: none;
+  width: 20px; height: 20px; border-radius: 50%;
+  background: var(--ink); color: #fff; font-size: 11.5px; font-weight: 700;
+}
+.muted { color: var(--muted); font-size: 12.5px; }
+.caption, .foot { margin: 6px 0 0; color: var(--muted); font-size: 12px; }
+.controls { display: flex; gap: 6px 14px; flex-wrap: wrap; margin-top: 8px; }
+.controls label { font-size: 12px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; min-width: 0; }
+.controls label span { white-space: nowrap; }
+select {
+  font: inherit; font-size: 13px; color: var(--ink);
+  padding: 4px 26px 4px 8px; max-width: 220px; min-width: 0;
+  border: 1px solid #cfcdc7; border-radius: 6px;
+  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23676661' stroke-width='1.5'/%3E%3C/svg%3E") no-repeat right 9px center;
+  appearance: none; -webkit-appearance: none; cursor: pointer;
+}
+.rows-wrap { margin-top: 6px; }
+table.rows { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.rows th { text-align: left; font-weight: 500; color: var(--muted); font-size: 11.5px; padding: 0 6px 3px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+.rows th.r { text-align: right; }
+.rows td { padding: 0 6px; height: 22px; line-height: 1.15; white-space: nowrap; }
+.rows tbody tr { cursor: pointer; }
+.rows tbody tr:hover td { background: #f6f6f4; }
+.rows tbody tr.sel td { background: var(--blue-soft); }
+.rows tbody tr.sel .nm { font-weight: 650; }
+.rows .rk { width: 24px; color: var(--muted); text-align: right; padding-right: 2px; }
+.rows .nm { width: 104px; }
+.rows .br { width: 100%; }
+.bar { display: block; height: 9px; background: var(--blue); border-radius: 0 4px 4px 0; min-width: 2px; }
+.rows tbody tr.sel .bar { background: var(--blue-strong); }
+.rows .v1 { text-align: right; width: 66px; }
+.rows .v2 { text-align: right; width: 58px; color: var(--muted); }
+.flag { font-size: 10px; color: var(--muted); margin-left: 1px; position: relative; top: -0.45em; line-height: 1; }
+.middle { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.tile { background: #f7f7f5; border-radius: 8px; padding: 8px 10px; min-width: 0; }
+.tile-label { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; color: var(--ink-2); font-size: 12px; }
+.tile-label a { font-size: 11.5px; white-space: nowrap; }
+.tile-value { font-size: 19px; font-weight: 650; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
+.tile-sub { color: var(--muted); font-size: 12px; }
+.tile-extra { color: var(--blue-ink); font-size: 12px; margin-top: 1px; }
+.tile-extra:empty { display: none; }
+.notes { margin: 8px 0 0; padding: 0; list-style: none; font-size: 12.5px; color: var(--ink-2); display: grid; gap: 3px; }
+.notes:empty { display: none; }
+.notes li { padding-left: 14px; position: relative; }
+.notes li::before { content: ""; position: absolute; left: 3px; top: 0.58em; width: 5px; height: 5px; border-radius: 50%; background: var(--blue); }
+.inputs { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 8px; }
+.inputs label { display: flex; flex-direction: column; justify-content: flex-end; gap: 3px; font-size: 11.5px; color: var(--ink-2); }
+.field { display: flex; align-items: center; gap: 3px; border: 1px solid #cfcdc7; border-radius: 6px; background: #fff; padding: 0 8px; }
+.field:focus-within { border-color: var(--blue); box-shadow: 0 0 0 3px rgba(42, 120, 214, 0.18); }
+.field input { border: 0; outline: 0; font: inherit; font-size: 13.5px; width: 100%; min-width: 0; padding: 5px 0; background: transparent; color: var(--ink); font-variant-numeric: tabular-nums; }
+.field span { color: var(--muted); font-size: 12.5px; }
+.field input[aria-invalid="true"] { color: var(--bad); }
+.results { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 8px; }
+.result { background: var(--blue-soft); color: var(--blue-ink); border-radius: 8px; padding: 8px 10px; font-size: 13px; }
+.result:empty { display: none; }
+.sources { margin: 6px 0 0; font-size: 12.5px; color: var(--ink-2); }
+.checklist { list-style: none; margin: 6px 0 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 3px 16px; font-size: 12px; color: var(--ink-2); }
+.checklist li { display: flex; gap: 6px; align-items: baseline; }
+.checklist .ic { color: var(--good); font-weight: 700; flex: none; }
+.checklist li.bad .ic { color: var(--bad); }
+footer { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; gap: 2px 16px; }
+.tip {
+  position: fixed; z-index: 10; max-width: 300px; pointer-events: none;
+  background: #1b1b1a; color: #fff; font-size: 12px; line-height: 1.45;
+  padding: 8px 10px; border-radius: 8px; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.18);
+}
+.tip b { font-weight: 650; }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Laptop and desktop: the whole dashboard fits one screen. */
+@media (min-width: 1100px) {
+  .page { height: 100vh; min-height: 560px; }
+  main {
+    flex: 1; min-height: 0;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.25fr);
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+  .ranking { grid-column: 1; grid-row: 1 / span 2; display: flex; flex-direction: column; min-height: 0; }
+  .middle { grid-column: 2; grid-row: 1; }
+  .checks { grid-column: 2; grid-row: 2; min-height: 0; overflow: auto; }
+  .rows-wrap { flex: 1; min-height: 0; overflow: auto; }
+  table.rows { height: calc(100% - 1px); }
+  .rows td { height: auto; }
+}
+/* Wide but short screens (most 1366x768 and scaled 1080p laptops): three columns. */
+@media (min-width: 1100px) and (max-height: 760px) {
+  body { font-size: 13px; }
+  .page { padding: 10px 18px 8px; gap: 8px; }
+  h1 { font-size: 19px; }
+  main {
+    gap: 8px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.18fr) minmax(0, 0.72fr);
+    grid-template-rows: minmax(0, 1fr);
+  }
+  .controls { display: grid; grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 8px; margin-top: 6px; }
+  .controls label { flex-direction: column; align-items: stretch; gap: 2px; }
+  .controls select { width: 100%; max-width: none; }
+  .rows td { line-height: 13px; }
+  .rows th { padding-bottom: 2px; }
+  .top { align-items: baseline; }
+  .top > div:first-child { display: flex; align-items: baseline; gap: 12px; min-width: 0; flex: 1; }
+  .top h1 { white-space: nowrap; flex: none; }
+  .top .sub { margin: 0; min-width: 0; }
+  .meta { display: flex; gap: 10px; }
+  .meta .daily { display: none; }
+  .meta > div + div::before { content: "·"; margin-right: 10px; }
+  .ranking { grid-row: 1; }
+  .middle { grid-column: 2; grid-row: 1; gap: 8px; min-height: 0; overflow: auto; }
+  .checks { grid-column: 3; grid-row: 1; }
+  .card { padding: 9px 12px; }
+  .tiles { gap: 6px; margin-top: 6px; }
+  .tile { padding: 6px 9px; }
+  .tile-value { font-size: 17px; }
+  .inputs { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 6px; }
+  .results { margin-top: 6px; }
+  .result { padding: 6px 9px; font-size: 12.5px; }
+  .rows { font-size: 12px; }
+  .checklist { grid-template-columns: 1fr; gap: 4px; }
+  .caption, .foot, .notes, .sources { margin-top: 4px; }
+  .ranking .caption, .ranking .foot, .rows-wrap { margin-top: 2px; }
+  .card-head h2 { font-size: 14.5px; }
+}
+/* Tablets and phones: one column that scrolls. */
+@media (max-width: 1099px) {
+  .inputs { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .checklist { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .page { padding: 12px; }
+  .top { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .meta { text-align: left; white-space: normal; }
+  .tiles, .results { grid-template-columns: 1fr; }
+  .inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rows .nm { width: 88px; }
+  .rows .v2 { width: 48px; }
+  .controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
+  .controls label { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
+  .controls label span { white-space: normal; }
+  select { width: 100%; max-width: none; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div>
+      <h1>EU market-entry check</h1>
+      <p class="sub">Selling to consumers in the EU: where to start, and when your own company beats a merchant of record.</p>
+    </div>
+    <div class="meta">
+      <div id="checked"></div>
+      <div>Built by <a id="author" rel="noopener"></a></div>
+    </div>
+  </header>
+
+  <div id="banner" class="banner" role="status" hidden></div>
+
+  <main>
+    <section class="card ranking" aria-labelledby="rank-title">
+      <div class="card-head">
+        <h2 id="rank-title"><span class="num">1</span>Where to start</h2>
+      </div>
+      <div class="controls">
+        <label><span>What do you sell?</span><select id="product"></select></label>
+        <label><span>Rank by</span><select id="sort">
+          <option value="buyers">People who bought it</option>
+          <option value="abroad">Buying from abroad</option>
+        </select></label>
+      </div>
+      <p class="caption" id="rank-caption"></p>
+      <div class="rows-wrap">
+        <table class="rows" id="rows">
+          <caption class="sr-only" id="rows-caption"></caption>
+          <thead><tr><th class="r">#</th><th>Country</th><th id="th-bar"></th><th class="r" id="th-v1"></th><th class="r" id="th-v2"></th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="foot" id="rank-foot"></p>
+    </section>
+
+    <div class="middle">
+      <section class="card detail" aria-labelledby="country-title" aria-live="polite">
+        <div class="card-head">
+          <h2 id="country-title"><span class="num">2</span><span id="country-name"></span></h2>
+          <span class="muted">Pick any country in the ranking</span>
+        </div>
+        <div class="tiles">
+          <div class="tile">
+            <div class="tile-label"><span>People who bought it online</span><a id="t1-src">Eurostat</a></div>
+            <div class="tile-value" id="t1-value"></div>
+            <div class="tile-sub" id="t1-sub"></div>
+          </div>
+          <div class="tile">
+            <div class="tile-label"><span>Bought from sellers abroad</span><a id="t2-src">Eurostat</a></div>
+            <div class="tile-value" id="t2-value"></div>
+            <div class="tile-sub" id="t2-sub"></div>
+          </div>
+          <div class="tile">
+            <div class="tile-label"><span>Standard VAT</span><a id="t3-src">EU tax database</a></div>
+            <div class="tile-value" id="t3-value"></div>
+            <div class="tile-sub" id="t3-sub"></div>
+            <div class="tile-extra" id="t3-extra"></div>
+          </div>
+          <div class="tile">
+            <div class="tile-label"><span id="t4-label"></span><a id="t4-src">ECB</a></div>
+            <div class="tile-value" id="t4-value"></div>
+            <div class="tile-sub" id="t4-sub"></div>
+          </div>
+        </div>
+        <ul class="notes" id="notes"></ul>
+      </section>
+
+      <section class="card calc" aria-labelledby="calc-title">
+        <div class="card-head">
+          <h2 id="calc-title"><span class="num">3</span>Own company or merchant of record?</h2>
+          <span class="muted">Example values, not quotes. Type your own.</span>
+        </div>
+        <form class="inputs" id="calc" onsubmit="return false">
+          <label>Expected sales a year<span class="field"><span>€</span><input id="sales" inputmode="decimal" autocomplete="off" value="2,000,000"></span></label>
+          <label>Merchant-of-record fee<span class="field"><input id="feePct" inputmode="decimal" autocomplete="off" value="5"><span>%</span></span></label>
+          <label>Card fees anyway<span class="field"><input id="cardPct" inputmode="decimal" autocomplete="off" value="2"><span>%</span></span></label>
+          <label>One-off setup cost<span class="field"><span>€</span><input id="setup" inputmode="decimal" autocomplete="off" value="15,000"></span></label>
+          <label>Yearly running cost<span class="field"><span>€</span><input id="running" inputmode="decimal" autocomplete="off" value="30,000"></span></label>
+        </form>
+        <div class="results" aria-live="polite"><div class="result" id="r1"></div><div class="result" id="r2"></div></div>
+        <p class="foot">Fee all-in, per-order charges included. It usually covers card fees, so only the part above them counts. VAT doesn't change the result.</p>
+      </section>
+    </div>
+
+    <section class="card checks" aria-labelledby="checks-title">
+      <div class="card-head">
+        <h2 id="checks-title"><span class="num">4</span>Sources and checks</h2>
+        <span class="muted" id="pulled"></span>
+      </div>
+      <p class="sources" id="sources"></p>
+      <ul class="checklist" id="checklist"></ul>
+    </section>
+  </main>
+
+  <footer>
+    <span>With Outpost's own data I'd add approval-rate gains from local processing, real fees and entity costs, and merchants' sales by country.</span>
+    <span>Planning model, not tax or legal advice.</span>
+    <a id="code-link" rel="noopener">Code and method</a>
+  </footer>
+</div>
+<div id="tip" class="tip" role="tooltip" hidden></div>
+<noscript><p style="padding:20px">This dashboard needs JavaScript to draw its tables.</p></noscript>
+
+<script>
+/*CALC*/
+</script>
+<script>
+const DATA = __DATA__;
+(function () {
+  "use strict";
+  const S = DATA.sources;
+  const E = S.eurostat;
+  const V = S.vat;
+  const F = S.fx;
+  const COUNTRIES = DATA.countries;
+  const CODES = Object.keys(COUNTRIES);
+  const PRODUCTS = E.products;
+  const PRODUCT = Object.fromEntries(PRODUCTS.map((p) => [p.key, p]));
+  const ABROAD = E.abroad;
+
+  const nf0 = new Intl.NumberFormat("en-GB", { maximumFractionDigits: 0 });
+  const nf1 = new Intl.NumberFormat("en-GB", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const nf2 = new Intl.NumberFormat("en-GB", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const dateFmt = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  const timeFmt = new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", hourCycle: "h23", timeZone: "UTC" });
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+  const day = (iso) => dateFmt.format(new Date(iso.length <= 10 ? iso + "T00:00:00Z" : iso));
+
+  function people(n) {
+    if (n >= 1e6) return nf1.format(n / 1e6) + "M";
+    if (n >= 1e3) return nf0.format(n / 1e3) + "k";
+    return nf0.format(n);
+  }
+  const pct = (v, digits) => (digits === 1 ? nf1 : nf0).format(v) + "%";
+  const euros = (v) => "€" + nf0.format(Math.round(v));
+  const tableLink = (dataset) => E.table_page.replace("{dataset}", dataset);
+  const flagWords = (flags) => flags.split("").map((f) => DATA.flag_meanings[f] || f).join(" and ");
+  const flagMark = (flags) => (flags ? `<sup class="flag" title="${esc(flagWords(flags))} (Eurostat)">${esc(flags)}</sup>` : "");
+
+  function buyerFlags(code, product) {
+    const set = new Set(((product.flags[code] || "") + (product.population_flags[code] || "")).split("").filter(Boolean));
+    return [...set].sort().join("");
+  }
+
+  const state = { product: "all", sort: "buyers", country: null };
+
+  function readHash() {
+    const h = new URLSearchParams(location.hash.slice(1));
+    if (PRODUCT[h.get("p")]) state.product = h.get("p");
+    if (h.get("s") === "abroad") state.sort = "abroad";
+    if (COUNTRIES[h.get("c")]) state.country = h.get("c");
+  }
+  function writeHash() {
+    const h = new URLSearchParams({ c: state.country, p: state.product });
+    if (state.sort !== "buyers") h.set("s", state.sort);
+    history.replaceState(null, "", "#" + h.toString());
+  }
+
+  function rankedRows() {
+    const p = PRODUCT[state.product];
+    const rows = CODES.map((code) => ({
+      code, name: COUNTRIES[code].name, buyers: p.buyers[code], share: p.share[code], abroad: ABROAD.any[code],
+    }));
+    const key = state.sort === "abroad" ? "abroad" : "buyers";
+    rows.sort((a, b) => b[key] - a[key] || a.name.localeCompare(b.name));
+    return rows;
+  }
+
+  function renderRanking() {
+    const p = PRODUCT[state.product];
+    const rows = rankedRows();
+    const byAbroad = state.sort === "abroad";
+    const max = Math.max(...rows.map((r) => (byAbroad ? r.abroad : r.buyers)));
+    $("rank-caption").innerHTML = byAbroad
+      ? `Share of online buyers who bought from sellers in another country, ${ABROAD.year} (the latest year published). <a href="${tableLink(ABROAD.dataset)}">Source</a>`
+      : `People aged 16–74 who bought this online in the last 3 months (${p.year} survey). <a href="${tableLink(p.dataset)}">Source</a>`;
+    $("rows-caption").textContent = byAbroad ? "EU countries ranked by buying from sellers abroad" : `EU countries ranked by people who bought ${p.label.toLowerCase()} online`;
+    $("th-bar").textContent = byAbroad ? "Bought from abroad" : "People who bought it";
+    $("th-v1").textContent = byAbroad ? "Abroad" : "People";
+    $("th-v2").textContent = byAbroad ? "People" : "Abroad";
+    const flagged = new Set();
+    $("rows").tBodies[0].innerHTML = rows.map((r, i) => {
+      const flags = buyerFlags(r.code, p);
+      flags.split("").forEach((f) => f && flagged.add(f));
+      const main = byAbroad ? pct(r.abroad) : people(r.buyers) + flagMark(flags);
+      const other = byAbroad ? people(r.buyers) + flagMark(flags) : pct(r.abroad);
+      const width = ((byAbroad ? r.abroad : r.buyers) / max) * 100;
+      const selected = r.code === state.country;
+      return `<tr data-code="${r.code}" tabindex="0" aria-selected="${selected}"${selected ? ' class="sel"' : ""}>` +
+        `<td class="rk">${i + 1}</td><td class="nm">${esc(r.name)}</td>` +
+        `<td class="br" aria-hidden="true"><span class="bar" style="width:${width.toFixed(2)}%"></span></td>` +
+        `<td class="v1">${main}</td><td class="v2">${other}</td></tr>`;
+    }).join("");
+    const legend = [...flagged].sort().map((f) => `${f} ${DATA.flag_meanings[f] || f}`).join(", ");
+    $("rank-foot").textContent =
+      `Abroad: online buyers who bought from another country (${ABROAD.year}, latest).` +
+      (legend ? ` Flags: ${legend}.` : "");
+  }
+
+  function renderDetail() {
+    const code = state.country;
+    const country = COUNTRIES[code];
+    const p = PRODUCT[state.product];
+    $("country-name").textContent = country.name;
+
+    $("t1-src").href = tableLink(p.dataset);
+    $("t1-value").innerHTML = people(p.buyers[code]) + flagMark(buyerFlags(code, p));
+    $("t1-sub").textContent = `${pct(p.share[code], 1)} of people aged 16–74, last 3 months · ${p.year}`;
+
+    $("t2-src").href = tableLink(ABROAD.dataset);
+    $("t2-value").textContent = `EU ${pct(ABROAD.eu[code])} · non-EU ${pct(ABROAD.non_eu[code])}`;
+    $("t2-sub").textContent = `of online buyers · ${ABROAD.year}, latest available`;
+
+    const vat = V.rates[code];
+    $("t3-src").href = V.tedb_page;
+    $("t3-value").textContent = `${vat.rate}%`;
+    $("t3-sub").textContent = `You keep €${nf2.format(100 / (1 + vat.rate / 100))} of every €100 a customer pays`;
+    $("t3-extra").textContent = vat.change ? `Changed on ${day(vat.change.date)}: ${vat.change.from}% → ${vat.change.to}%` : "";
+
+    const currency = country.currency;
+    const fx = F.per_amount[currency];
+    $("t4-src").href = F.page;
+    $("t4-label").textContent = `${nf0.format(F.amount)} ${currency} in $ and £`;
+    $("t4-value").textContent = `$${nf1.format(fx.USD.now / 1000)}k · £${nf1.format(fx.GBP.now / 1000)}k`;
+    $("t4-sub").textContent = `Moved ${nf1.format(fx.USD.range_pct)}% in $ and ${nf1.format(fx.GBP.range_pct)}% in £ over 90 days · ${day(fx.USD.date)}`;
+
+    const notes = [];
+    for (const r of vat.regional) {
+      notes.push(esc(`The EU tax database also lists ${r.rate}% for the ${r.region}${r.note ? ", " + r.note : ""}.`));
+    }
+    if (currency !== "EUR") {
+      notes.push(esc(`${country.name} uses the ${DATA.currency_names[currency]} (${currency}), so the currency figures are for ${currency}.`));
+    }
+    const popFlags = p.population_flags[code];
+    if (popFlags) notes.push(esc(`Eurostat marks ${country.name}'s ${p.year} population figure as ${flagWords(popFlags)}.`));
+    const customs = customsNote(p);
+    if (customs) notes.push(customs);
+    $("notes").innerHTML = notes.map((n) => `<li>${n}</li>`).join("");
+  }
+
+  function customsNote(product) {
+    const rule = DATA.customs;
+    if (product.kind !== "physical") return "";
+    const now = new Date();
+    if (now >= new Date(rule.until + "T00:00:00Z")) return "";
+    const started = now >= new Date(rule.from + "T00:00:00Z");
+    return `Shipping physical goods from outside the EU? ${started ? "Since" : "From"} ${day(rule.from)}, goods in parcels worth up to €${rule.max_value_eur} ` +
+      `pay a temporary €${rule.duty_eur} customs duty per item, until ${day(rule.until)} ` +
+      `(<a href="${esc(rule.url)}" rel="noopener">European Commission</a>).`;
+  }
+
+  const FIELDS = ["sales", "feePct", "cardPct", "setup", "running"];
+  const MONEY = new Set(["sales", "setup", "running"]);
+  const readNumber = (id) => {
+    const raw = $(id).value.replace(/[\s,€%]/g, "");
+    return raw === "" ? NaN : Number(raw);
+  };
+  function months(m) {
+    if (m < 1) return "under a month";
+    const rounded = Math.round(m * 10) / 10;
+    return `${Number.isInteger(rounded) ? rounded : nf1.format(rounded)} month${rounded === 1 ? "" : "s"}`;
+  }
+  function renderCalc() {
+    const input = Object.fromEntries(FIELDS.map((f) => [f, readNumber(f)]));
+    const result = compareRoutes(input);
+    FIELDS.forEach((f) => $(f).setAttribute("aria-invalid", String(!result.ok && result.invalid.includes(f))));
+    const r1 = $("r1");
+    const r2 = $("r2");
+    if (!result.ok) {
+      r1.textContent = "Enter a number of 0 or more in every box (percentages up to 100).";
+      r2.textContent = "";
+      return;
+    }
+    if (result.mode === "own-never-cheaper") {
+      r1.textContent = "At these fees your own company is never cheaper: the merchant-of-record fee is no more than the card fees you'd pay anyway.";
+      r2.textContent = "";
+      return;
+    }
+    r1.innerHTML = `Own company is cheaper above <b>${euros(result.breakEven)}</b> of sales a year.`;
+    if (result.yearlySaving > 0) {
+      const payback = input.setup === 0 ? "no setup to pay back" : `setup pays back in <b>${months(result.paybackMonths)}</b>`;
+      r2.innerHTML = `At ${euros(input.sales)}: saves <b>${euros(result.yearlySaving)}</b> a year; ${payback}.`;
+    } else if (result.yearlySaving === 0) {
+      r2.innerHTML = `At ${euros(input.sales)}: both cost the same, so the setup never pays back.`;
+    } else {
+      r2.innerHTML = `At ${euros(input.sales)}: merchant of record is <b>${euros(-result.yearlySaving)}</b> a year cheaper; no payback.`;
+    }
+  }
+
+  function renderChecks() {
+    const pulled = new Date(DATA.generated_at);
+    $("pulled").textContent = `Pulled ${day(DATA.generated_at)}, ${timeFmt.format(pulled)} UTC`;
+    const link = (href, text) => `<a href="${esc(href)}" rel="noopener">${esc(text)}</a>`;
+    $("sources").innerHTML = [
+      `${link(tableLink("isoc_ec_ib20"), "Eurostat")} (buying, population)`,
+      `${link(V.tedb_page, "EU tax database")} (VAT)`,
+      `${link(V.open_list_page, "open VAT list")} (cross-check)`,
+      `${link(F.page, "European Central Bank")} (exchange rates)`,
+    ].join(" · ");
+    const checks = [...E.checks, ...V.checks, ...F.checks];
+    $("checklist").innerHTML = checks.map((c) =>
+      `<li class="${c.ok ? "ok" : "bad"}"><span class="ic" aria-hidden="true">${c.ok ? "✓" : "!"}</span>` +
+      `<span>${esc(c.text)}<span class="sr-only">${c.ok ? " (passed)" : " (needs attention)"}</span></span></li>`
+    ).join("");
+  }
+
+  function renderHeader() {
+    const generated = new Date(DATA.generated_at);
+    $("checked").innerHTML = `Data checked ${day(DATA.generated_at)}, ${timeFmt.format(generated)} UTC<span class="daily"> · updates daily</span>`;
+    const author = $("author");
+    author.textContent = DATA.author.name;
+    author.href = DATA.author.linkedin;
+    $("code-link").href = DATA.author.code;
+    const messages = DATA.warnings.map(esc);
+    const ageDays = (Date.now() - generated.getTime()) / 86400000;
+    if (ageDays > 2) {
+      messages.unshift(`These numbers were last checked on ${day(DATA.generated_at)}, so the daily update may have paused.`);
+    }
+    if (messages.length) {
+      $("banner").innerHTML = messages.map((m) => `<p>${m}</p>`).join("");
+      $("banner").hidden = false;
+    }
+  }
+
+  function renderProducts() {
+    const groups = [["any", "All"], ["physical", "Physical goods"], ["digital", "Digital"]];
+    $("product").innerHTML = groups.map(([kind, label]) => {
+      const options = PRODUCTS.filter((p) => p.kind === kind)
+        .map((p) => `<option value="${p.key}">${esc(p.label)}</option>`).join("");
+      return options ? `<optgroup label="${label}">${options}</optgroup>` : "";
+    }).join("");
+    $("product").value = state.product;
+    $("sort").value = state.sort;
+  }
+
+  function select(code) {
+    state.country = code;
+    renderRanking();
+    renderDetail();
+    writeHash();
+  }
+
+  // Tooltip for the ranking rows.
+  const tip = $("tip");
+  function tipHtml(code) {
+    const p = PRODUCT[state.product];
+    const flags = buyerFlags(code, p);
+    return `<b>${esc(COUNTRIES[code].name)}</b><br>` +
+      `${people(p.buyers[code])} people bought ${esc(p.label.toLowerCase())} online in the last 3 months ` +
+      `(${pct(p.share[code], 1)} of people aged 16–74, ${p.year})${flags ? `; Eurostat: ${esc(flagWords(flags))}` : ""}.<br>` +
+      `${pct(ABROAD.any[code], 1)} of online buyers bought from sellers in another country (${ABROAD.year}).`;
+  }
+  function placeTip(x, y) {
+    const pad = 14;
+    const w = tip.offsetWidth;
+    const h = tip.offsetHeight;
+    tip.style.left = Math.min(x + pad, window.innerWidth - w - 8) + "px";
+    tip.style.top = Math.min(y + pad, window.innerHeight - h - 8) + "px";
+  }
+  const tbody = $("rows").tBodies[0];
+  tbody.addEventListener("mousemove", (event) => {
+    const row = event.target.closest("tr[data-code]");
+    if (!row) return;
+    if (tip.dataset.code !== row.dataset.code) {
+      tip.innerHTML = tipHtml(row.dataset.code);
+      tip.dataset.code = row.dataset.code;
+    }
+    tip.hidden = false;
+    placeTip(event.clientX, event.clientY);
+  });
+  tbody.addEventListener("mouseleave", () => { tip.hidden = true; tip.dataset.code = ""; });
+  tbody.addEventListener("click", (event) => {
+    const row = event.target.closest("tr[data-code]");
+    if (row) select(row.dataset.code);
+  });
+  tbody.addEventListener("keydown", (event) => {
+    const row = event.target.closest("tr[data-code]");
+    if (!row) return;
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      select(row.dataset.code);
+      tbody.querySelector(`tr[data-code="${row.dataset.code}"]`).focus();
+    } else if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+      event.preventDefault();
+      const next = event.key === "ArrowDown" ? row.nextElementSibling : row.previousElementSibling;
+      if (next) next.focus();
+    }
+  });
+
+  $("product").addEventListener("change", (event) => {
+    state.product = event.target.value;
+    renderRanking();
+    renderDetail();
+    writeHash();
+  });
+  $("sort").addEventListener("change", (event) => {
+    state.sort = event.target.value;
+    renderRanking();
+    writeHash();
+  });
+  FIELDS.forEach((f) => {
+    $(f).addEventListener("input", renderCalc);
+    if (MONEY.has(f)) {
+      $(f).addEventListener("blur", () => {
+        const v = readNumber(f);
+        if (Number.isFinite(v) && v >= 0) $(f).value = nf0.format(v);
+      });
+    }
+  });
+  window.addEventListener("hashchange", () => {
+    readHash();
+    renderProducts();
+    renderRanking();
+    renderDetail();
+  });
+
+  readHash();
+  if (!state.country) state.country = rankedRows()[0].code;
+  renderHeader();
+  renderProducts();
+  renderRanking();
+  renderDetail();
+  renderCalc();
+  renderChecks();
+})();
+</script>
+</body>
+</html>
