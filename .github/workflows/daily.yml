@@ -28,9 +28,11 @@ jobs:
           python-version: "3.12"
 
       - name: Install the test tools
+        if: github.event_name != 'schedule'
         run: pip install -r requirements-dev.txt
 
-      - name: Run the tests
+      - name: Run the tests (on code changes; the daily run relies on the data checks)
+        if: github.event_name != 'schedule'
         run: python -m pytest -q
 
       - name: Pull the data, check it and build the page

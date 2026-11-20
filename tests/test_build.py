@@ -62,6 +62,7 @@ def test_main_writes_the_page_and_the_data(world, tmp_path, monkeypatch):
     build.main(["--data", str(tmp_path / "data" / "latest.json"), "--out", str(tmp_path / "site")])
     assert (tmp_path / "site" / "index.html").exists()
     assert (tmp_path / "site" / ".nojekyll").exists()
+    assert (tmp_path / "site" / "preview.png").exists() == (build.ROOT / "docs" / "preview.png").exists()
     saved = json.loads((tmp_path / "data" / "latest.json").read_text())
     assert saved["sources"]["fx"]["latest"] <= datetime.now(timezone.utc).date().isoformat()
     assert output.read_text() == "warnings=0\n"

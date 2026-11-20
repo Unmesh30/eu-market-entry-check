@@ -17,6 +17,12 @@ MAX_AGE_DAYS = 7  # weekends and holidays leave gaps; a week without rates means
 MAX_DAILY_MOVE = 0.10  # a 10% move in one day is far more likely a bad feed than a market move
 
 
+def day_text(iso):
+    """'2026-11-20' -> '20 Nov 2026'."""
+    day = date.fromisoformat(iso)
+    return f"{day.day} {day:%b %Y}"
+
+
 def parse_ecb(body):
     """{date: {currency: units per euro}} from the ECB feed."""
     try:
@@ -83,8 +89,8 @@ def pull(fetch, today, local_currencies):
 
     non_euro = sorted(c for c in set(local_currencies) if c != "EUR")
     checks = [
-        {"ok": True, "text": f"ECB rates to {latest}; all {len(non_euro)} non-euro currencies",
-         "detail": f"{len(ordered)} working days from {ordered[0]}: {', '.join(non_euro)}"},
+        {"ok": True, "text": f"ECB rates to {day_text(latest)}; all {len(non_euro)} non-euro currencies",
+         "detail": f"{len(ordered)} working days from {day_text(ordered[0])}: {', '.join(non_euro)}"},
         {"ok": True, "text": f"No one-day move over {MAX_DAILY_MOVE:.0%} (a sign of a bad feed)"},
     ]
     return {

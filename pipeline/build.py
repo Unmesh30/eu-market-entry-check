@@ -7,6 +7,7 @@ If a source fails a check, the page keeps that source's last good data and says 
 import argparse
 import json
 import os
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -103,6 +104,9 @@ def main(argv=None):
     out.mkdir(parents=True, exist_ok=True)
     (out / "index.html").write_text(render(data), encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")
+    preview = ROOT / "docs" / "preview.png"  # the picture shown when the link is shared
+    if preview.exists():
+        shutil.copyfile(preview, out / "preview.png")
 
     for warning in data["warnings"]:
         print(f"::warning::{warning}")

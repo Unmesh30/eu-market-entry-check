@@ -8,6 +8,12 @@
 <meta property="og:title" content="EU market-entry check">
 <meta property="og:description" content="Where to start selling to consumers in the EU, and when your own company beats a merchant of record. Updated daily from official sources.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://unmesh30.github.io/eu-market-entry-check/">
+<meta property="og:image" content="https://unmesh30.github.io/eu-market-entry-check/preview.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="678">
+<meta property="og:image:alt" content="The EU market-entry check dashboard: EU countries ranked, country detail, cost calculator and checks">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='9' width='3.5' height='6' rx='1' fill='%232a78d6'/%3E%3Crect x='6.25' y='5' width='3.5' height='10' rx='1' fill='%232a78d6'/%3E%3Crect x='11.5' y='1' width='3.5' height='14' rx='1' fill='%231c5cab'/%3E%3C/svg%3E">
 <style>
 :root {
@@ -196,6 +202,8 @@ footer { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; g
   .inputs { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .rows .nm { width: 88px; }
   .rows .v2 { width: 48px; }
+  .rows th { white-space: normal; vertical-align: bottom; }
+  .rows .v1 { width: 64px; }
   .controls { display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; }
   .controls label { display: grid; grid-template-columns: 112px minmax(0, 1fr); }
   .controls label span { white-space: normal; }
@@ -226,8 +234,9 @@ footer { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; g
       <div class="controls">
         <label><span>What do you sell?</span><select id="product"></select></label>
         <label><span>Rank by</span><select id="sort">
+          <option value="crossborder">People buying from abroad</option>
           <option value="buyers">People who bought it</option>
-          <option value="abroad">Buying from abroad</option>
+          <option value="share">Share buying from abroad</option>
         </select></label>
       </div>
       <p class="caption" id="rank-caption"></p>
@@ -279,7 +288,7 @@ footer { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; g
           <span class="muted">Example values, not quotes. Type your own.</span>
         </div>
         <form class="inputs" id="calc" onsubmit="return false">
-          <label>Expected sales a year<span class="field"><span>€</span><input id="sales" inputmode="decimal" autocomplete="off" value="2,000,000"></span></label>
+          <label><span id="sales-label">Sales a year</span><span class="field"><span>€</span><input id="sales" inputmode="decimal" autocomplete="off" value="2,000,000"></span></label>
           <label>Merchant-of-record fee<span class="field"><input id="feePct" inputmode="decimal" autocomplete="off" value="5"><span>%</span></span></label>
           <label>Card fees anyway<span class="field"><input id="cardPct" inputmode="decimal" autocomplete="off" value="2"><span>%</span></span></label>
           <label>One-off setup cost<span class="field"><span>€</span><input id="setup" inputmode="decimal" autocomplete="off" value="15,000"></span></label>
@@ -351,49 +360,73 @@ const DATA = __DATA__;
     return [...set].sort().join("");
   }
 
-  const state = { product: "all", sort: "buyers", country: null };
+  // Ways to rank. "crossborder" and "share" come from one survey year and cover all products.
+  const SORTS = ABROAD.people ? ["crossborder", "buyers", "share"] : ["buyers", "share"];
+  const state = { product: "all", sort: SORTS[0], country: null };
+
+  function abroadFlags(code) {
+    const set = new Set(((ABROAD.flags[code] || "") + ((ABROAD.population_flags || {})[code] || "")).split("").filter(Boolean));
+    return [...set].sort().join("");
+  }
 
   function readHash() {
     const h = new URLSearchParams(location.hash.slice(1));
     if (PRODUCT[h.get("p")]) state.product = h.get("p");
-    if (h.get("s") === "abroad") state.sort = "abroad";
+    const sort = h.get("s") === "abroad" ? "share" : h.get("s"); // "abroad" is the old name of "share"
+    if (SORTS.includes(sort)) state.sort = sort;
+    else if (h.get("p") && h.get("p") !== "all" && PRODUCT[h.get("p")]) state.sort = "buyers"; // a product link ranks that product
     if (COUNTRIES[h.get("c")]) state.country = h.get("c");
   }
   function writeHash() {
-    const h = new URLSearchParams({ c: state.country, p: state.product });
-    if (state.sort !== "buyers") h.set("s", state.sort);
+    const h = new URLSearchParams({ c: state.country, p: state.product, s: state.sort });
     history.replaceState(null, "", "#" + h.toString());
   }
 
+  function metric(row) {
+    return state.sort === "share" ? row.share : state.sort === "crossborder" ? row.crossborder : row.buyers;
+  }
   function rankedRows() {
     const p = PRODUCT[state.product];
     const rows = CODES.map((code) => ({
-      code, name: COUNTRIES[code].name, buyers: p.buyers[code], share: p.share[code], abroad: ABROAD.any[code],
+      code, name: COUNTRIES[code].name, buyers: p.buyers[code],
+      crossborder: ABROAD.people ? ABROAD.people[code] : 0, share: ABROAD.any[code],
     }));
-    const key = state.sort === "abroad" ? "abroad" : "buyers";
-    rows.sort((a, b) => b[key] - a[key] || a.name.localeCompare(b.name));
+    rows.sort((a, b) => metric(b) - metric(a) || a.name.localeCompare(b.name));
     return rows;
   }
 
   function renderRanking() {
     const p = PRODUCT[state.product];
     const rows = rankedRows();
-    const byAbroad = state.sort === "abroad";
-    const max = Math.max(...rows.map((r) => (byAbroad ? r.abroad : r.buyers)));
-    $("rank-caption").innerHTML = byAbroad
-      ? `Share of online buyers who bought from sellers in another country, ${ABROAD.year} (the latest year published). <a href="${tableLink(ABROAD.dataset)}">Source</a>`
-      : `People aged 16–74 who ${esc(p.phrase)} in the last 3 months (${p.year} survey). <a href="${tableLink(p.dataset)}">Source</a>`;
-    $("rows-caption").textContent = byAbroad ? "EU countries ranked by buying from sellers abroad" : `EU countries ranked by people who ${p.phrase}`;
-    $("th-bar").textContent = byAbroad ? "Bought from abroad" : "People who bought it";
-    $("th-v1").textContent = byAbroad ? "Abroad" : "People";
-    $("th-v2").textContent = byAbroad ? "People" : "Abroad";
+    const sort = state.sort;
+    const max = Math.max(...rows.map(metric));
+    const source = (dataset) => ` <a href="${tableLink(dataset)}">Source</a>`;
+    $("rank-caption").innerHTML = {
+      buyers: `People aged 16–74 who ${esc(p.phrase)} in the last 3 months (${p.year} survey).` + source(p.dataset),
+      crossborder: `People aged 16–74 who bought online from a seller in another country in the last 3 months (${ABROAD.year}, the latest year published; all products).` + source(ABROAD.dataset),
+      share: `Share of online buyers who bought from a seller in another country (${ABROAD.year}, the latest year published; all products).` + source(ABROAD.dataset),
+    }[sort];
+    $("rows-caption").textContent = {
+      buyers: `EU countries ranked by people who ${p.phrase}`,
+      crossborder: "EU countries ranked by people buying online from another country",
+      share: "EU countries ranked by the share of online buyers buying from another country",
+    }[sort];
+    const heads = {
+      buyers: ["People who bought it", "People", "Abroad"],
+      crossborder: ["People buying from abroad", "People", "Share"],
+      share: ["Share buying from abroad", "Share", "People"],
+    }[sort];
+    $("th-bar").textContent = heads[0];
+    $("th-v1").textContent = heads[1];
+    $("th-v2").textContent = heads[2];
     const flagged = new Set();
     $("rows").tBodies[0].innerHTML = rows.map((r, i) => {
-      const flags = buyerFlags(r.code, p);
+      const flags = sort === "buyers" ? buyerFlags(r.code, p) : abroadFlags(r.code);
       flags.split("").forEach((f) => f && flagged.add(f));
-      const main = byAbroad ? pct(r.abroad) : people(r.buyers) + flagMark(flags);
-      const other = byAbroad ? people(r.buyers) + flagMark(flags) : pct(r.abroad);
-      const width = ((byAbroad ? r.abroad : r.buyers) / max) * 100;
+      const count = people(sort === "buyers" ? r.buyers : r.crossborder) + flagMark(flags);
+      const main = sort === "share" ? pct(r.share) : count;
+      const other = sort === "share" ? count : pct(r.share);
+      const width = (metric(r) / max) * 100;
       const selected = r.code === state.country;
       return `<tr data-code="${r.code}" tabindex="0" aria-selected="${selected}"${selected ? ' class="sel"' : ""}>` +
         `<td class="rk">${i + 1}</td><td class="nm">${esc(r.name)}</td>` +
@@ -402,7 +435,7 @@ const DATA = __DATA__;
     }).join("");
     const legend = [...flagged].sort().map((f) => `${f} ${DATA.flag_meanings[f] || f}`).join(", ");
     $("rank-foot").textContent =
-      `Abroad: online buyers who bought from another country (${ABROAD.year}, latest).` +
+      `${sort === "buyers" ? "Abroad" : "Share"}: % of online buyers who bought from a seller in another country (${ABROAD.year}, latest).` +
       (legend ? ` Flags: ${legend}.` : "");
   }
 
@@ -417,8 +450,16 @@ const DATA = __DATA__;
     $("t1-sub").textContent = `${pct(p.share[code], 1)} of people aged 16–74, last 3 months · ${p.year}`;
 
     $("t2-src").href = tableLink(ABROAD.dataset);
-    $("t2-value").textContent = `EU ${pct(ABROAD.eu[code])} · non-EU ${pct(ABROAD.non_eu[code])}`;
-    $("t2-sub").textContent = `of online buyers · ${ABROAD.year}, latest available`;
+    if (ABROAD.people) {
+      $("t2-value").innerHTML = people(ABROAD.people[code]) + flagMark(abroadFlags(code));
+      $("t2-sub").textContent =
+        `${pct(ABROAD.any[code])} of online buyers: EU ${pct(ABROAD.eu[code])}, non-EU ${pct(ABROAD.non_eu[code])}; ` +
+        `some buy from both · ${ABROAD.year}`;
+    } else {
+      $("t2-value").textContent = `EU ${pct(ABROAD.eu[code])} · non-EU ${pct(ABROAD.non_eu[code])}`;
+      $("t2-sub").textContent = `of online buyers; some buy from both · ${ABROAD.year}`;
+    }
+    $("sales-label").textContent = `Sales a year in ${country.name}`;
 
     const vat = V.rates[code];
     $("t3-src").href = V.tedb_page;
@@ -431,7 +472,7 @@ const DATA = __DATA__;
     $("t4-src").href = F.page;
     $("t4-label").textContent = `${nf0.format(F.amount)} ${currency} in $ and £`;
     $("t4-value").textContent = `$${nf1.format(fx.USD.now / 1000)}k · £${nf1.format(fx.GBP.now / 1000)}k`;
-    $("t4-sub").textContent = `Moved ${nf1.format(fx.USD.range_pct)}% in $ and ${nf1.format(fx.GBP.range_pct)}% in £ over 90 days · ${day(fx.USD.date)}`;
+    $("t4-sub").textContent = `90-day range (high vs low): ${nf1.format(fx.USD.range_pct)}% in $, ${nf1.format(fx.GBP.range_pct)}% in £ · ${day(fx.USD.date)}`;
 
     const notes = [];
     for (const r of vat.regional) {
@@ -557,7 +598,9 @@ const DATA = __DATA__;
     return `<b>${esc(COUNTRIES[code].name)}</b><br>` +
       `${people(p.buyers[code])} people ${esc(p.phrase)} in the last 3 months ` +
       `(${pct(p.share[code], 1)} of people aged 16–74, ${p.year})${flags ? `; Eurostat: ${esc(flagWords(flags))}` : ""}.<br>` +
-      `${pct(ABROAD.any[code], 1)} of online buyers bought from sellers in another country (${ABROAD.year}).`;
+      (ABROAD.people
+        ? `${people(ABROAD.people[code])} people (${pct(ABROAD.any[code], 1)} of online buyers) bought from a seller in another country (${ABROAD.year}).`
+        : `${pct(ABROAD.any[code], 1)} of online buyers bought from a seller in another country (${ABROAD.year}).`);
   }
   function placeTip(x, y) {
     const pad = 14;
@@ -598,6 +641,11 @@ const DATA = __DATA__;
 
   $("product").addEventListener("change", (event) => {
     state.product = event.target.value;
+    // Picking a product means ranking by it: the abroad measures are not split by product.
+    if (state.sort !== "buyers") {
+      state.sort = "buyers";
+      $("sort").value = "buyers";
+    }
     renderRanking();
     renderDetail();
     writeHash();
@@ -623,6 +671,7 @@ const DATA = __DATA__;
     renderDetail();
   });
 
+  if (!ABROAD.people) $("sort").querySelector('option[value="crossborder"]').remove();
   readHash();
   if (!state.country) state.country = rankedRows()[0].code;
   renderHeader();

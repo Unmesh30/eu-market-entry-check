@@ -46,10 +46,12 @@ PRODUCTS = [
     _product("apps", "App subscriptions", "had a paid app subscription (e.g. language, travel, weather)", "isoc_ec_ibgs", "I_BAPP2", "digital"),
 ]
 
-# Share of online buyers who bought from sellers in other countries.
+# Buying from sellers in another country. Shares of online buyers (PC_IND_BUY3) for the split by origin,
+# and the share of all people aged 16-74 (PC_IND) to count how many people that is.
 ABROAD = {
     "dataset": "isoc_ec_ibos",
     "unit": "PC_IND_BUY3",
+    "people_unit": "PC_IND",
     "indicators": {"any": "I_BPG_FOR", "eu": "I_BPG_EU", "non_eu": "I_BPG_WRLD"},
 }
 
@@ -173,20 +175,22 @@ def flag_summary(flagged):
 
 
 def pull(fetch, today):
-    """Pull every Eurostat table the page uses and check it. Raises DataError on any gap."""
-    since = today.year - 4
+    """Pull every Eurostat table the page uses and check it. Raises DataError on any gap.
+
+    No year window is applied: these tables start in 2020 and stay small, and a closed table (buying from
+    abroad ends in 2023) has to keep working in later years. Every number is shown with its survey year.
+    """
     updated = {}
 
     products = []
     for product in PRODUCTS:
         doc = load(fetch, table_url(
-            product["dataset"], indic_is=product["indicator"], ind_type="IND_TOTAL",
-            unit="PC_IND", geo=CODES, sinceTimePeriod=since,
+            product["dataset"], indic_is=product["indicator"], ind_type="IND_TOTAL", unit="PC_IND", geo=CODES,
         ))
         table = by_country_year(doc)
         year = latest_full_year(table)
         if year is None:
-            raise DataError(f"'{product['label']}': no survey year since {since} covers all 27 countries")
+            raise DataError(f"'{product['label']}': no survey year covers all 27 countries")
         share = {country: table[(country, year)][0] for country in CODES}
         outside = [EU27[c][0] for c, v in share.items() if not 0 <= v <= 100]
         if outside:
@@ -203,16 +207,20 @@ def pull(fetch, today):
     abroad_tables = {}
     for key, indicator in ABROAD["indicators"].items():
         doc = load(fetch, table_url(
-            ABROAD["dataset"], indic_is=indicator, ind_type="IND_TOTAL",
-            unit=ABROAD["unit"], geo=CODES, sinceTimePeriod=since,
+            ABROAD["dataset"], indic_is=indicator, ind_type="IND_TOTAL", unit=ABROAD["unit"], geo=CODES,
         ))
         abroad_tables[key] = by_country_year(doc)
         updated[ABROAD["dataset"]] = doc.get("updated")
+    doc = load(fetch, table_url(
+        ABROAD["dataset"], indic_is=ABROAD["indicators"]["any"], ind_type="IND_TOTAL",
+        unit=ABROAD["people_unit"], geo=CODES,
+    ))
+    abroad_tables["people_share"] = by_country_year(doc)
     shared = set.intersection(*(full_years(table) for table in abroad_tables.values()))
     if not shared:
-        raise DataError(f"Buying from sellers abroad: no survey year since {since} covers all 27 countries")
-    abroad_year = max(shared)  # the latest year in which all three measures cover every country
-    abroad ={"year": abroad_year, "dataset": ABROAD["dataset"], "updated": updated[ABROAD["dataset"]]}
+        raise DataError("Buying from sellers abroad: no survey year covers all 27 countries")
+    abroad_year = max(shared)  # the latest year in which every measure covers every country
+    abroad = {"year": abroad_year, "dataset": ABROAD["dataset"], "updated": updated[ABROAD["dataset"]]}
     abroad_flags = {}
     for key, table in abroad_tables.items():
         abroad[key] = {c: table[(c, abroad_year)][0] for c in CODES}
@@ -220,13 +228,24 @@ def pull(fetch, today):
             if table[(c, abroad_year)][1]:
                 abroad_flags.setdefault(c, set()).update(table[(c, abroad_year)][1])
     abroad["flags"] = {c: "".join(sorted(f)) for c, f in abroad_flags.items()}
+    for key in ("any", "eu", "non_eu", "people_share"):
+        outside = [EU27[c][0] for c, v in abroad[key].items() if not 0 <= v <= 100]
+        if outside:
+            raise DataError(f"Buying from sellers abroad: shares outside 0-100% for {', '.join(outside)}")
+    # Online buyers are a subset of all people, so their share can't be smaller. Catches a unit mix-up.
+    mixed_up = [EU27[c][0] for c in CODES if abroad["people_share"][c] > abroad["any"][c] + 0.01]
+    if mixed_up:
+        raise DataError(f"Buying from sellers abroad: share of all people above share of online buyers for {', '.join(mixed_up)}")
 
-    survey_years = sorted({p["year"] for p in products})
+    survey_years = sorted({p["year"] for p in products} | {abroad_year})
     population, updated[POPULATION_DATASET] = population_16_74(fetch, survey_years)
     for product in products:
         people = population[str(product["year"])]
         product["buyers"] = {c: round(product["share"][c] / 100 * people[c]["value"]) for c in CODES}
         product["population_flags"] = {c: people[c]["flags"] for c in CODES if people[c]["flags"]}
+    people = population[str(abroad_year)]
+    abroad["people"] = {c: round(abroad["people_share"][c] / 100 * people[c]["value"]) for c in CODES}
+    abroad["population_flags"] = {c: people[c]["flags"] for c in CODES if people[c]["flags"]}
 
     by_year = {}
     for product in products:
@@ -246,8 +265,10 @@ def pull(fetch, today):
 
     names = ", ".join(EU27[c][0] for c in sorted(flagged, key=lambda c: EU27[c][0]))
     checks = [
-        {"ok": True, "text": "Each product: latest survey year with all 27 countries", "detail": f"Survey years: {years_text}. A gap is never read as zero."},
-        {"ok": True, "text": f"Buying abroad: {abroad_year}, the latest year for all 27"},
+        {"ok": True, "text": "Each product: latest survey year with all 27 countries",
+         "detail": f"Survey years: {years_text}. A gap is never read as zero."},
+        {"ok": True, "text": f"Buying abroad: {abroad_year}, the latest year for all 27",
+         "detail": f"People counted with the {abroad_year} population. EU and non-EU overlap: some buy from both."},
         {"ok": True, "text": f"Population 16–74 matched to each survey year ({', '.join(map(str, survey_years))})"},
         {"ok": True, "text": f"Eurostat flags shown ({names})" if flagged else "No Eurostat flags on the numbers shown",
          "detail": flag_summary(flagged)},

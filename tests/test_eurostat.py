@@ -80,3 +80,27 @@ def test_incomplete_population_is_an_error(world, today):
 def test_queries_ask_for_all_27_countries(world, today):
     eurostat.pull(world.fetch, today)
     assert all(call.count("geo=") == 27 for call in world.calls if "eurostat" in call)
+
+
+def test_people_buying_from_abroad_use_the_same_year_population(world, today):
+    result = eurostat.pull(world.fetch, today)
+    abroad = result["abroad"]
+    assert abroad["year"] == 2023
+    population = sum(world.population("FR", f"Y{age}", 2023) for age in range(16, 75))
+    assert result["population"]["2023"]["FR"]["value"] == population
+    assert abroad["people"]["FR"] == round(abroad["people_share"]["FR"] / 100 * population)
+    # The count uses the share of all people, which is below the share of online buyers.
+    assert abroad["people_share"]["FR"] < abroad["any"]["FR"]
+
+
+def test_a_unit_mix_up_in_buying_abroad_is_an_error(world, today):
+    world.unit_mix_up = True
+    with pytest.raises(DataError, match="share of all people above share of online buyers"):
+        eurostat.pull(world.fetch, today)
+
+
+def test_no_year_window_so_the_closed_abroad_table_keeps_working(world):
+    from datetime import date
+    result = eurostat.pull(world.fetch, date(2031, 1, 15))  # years after the abroad table ended
+    assert result["abroad"]["year"] == 2023
+    assert all("sinceTimePeriod" not in call for call in world.calls)

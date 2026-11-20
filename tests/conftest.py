@@ -88,18 +88,22 @@ class World:
         self.ecb_jump = False
         self.ecb_drop = set()
         self.ecb_latest = date(2026, 11, 19)
+        self.unit_mix_up = False
         self.calls = []
 
     # Eurostat ------------------------------------------------------------------------------------
     @staticmethod
-    def share(indicator, code, year):
+    def share(indicator, code, year, unit="PC_IND"):
         i = CODES.index(code)
         if indicator in PHYSICAL and year >= 2025:
             return None  # physical goods were last asked in 2024, as in the real survey
         if indicator == "I_BAPP2" and year == 2024 and code == "CY":
             return None  # one country short in 2024, as in the real table
         base = {"I_BUY3": 60, "I_BPG_FOR": 30, "I_BPG_EU": 20, "I_BPG_WRLD": 12}.get(indicator, 15)
-        return round(base + (i * 7 % 23) * 0.5 + (year - 2020) * 0.3, 2)
+        value = base + (i * 7 % 23) * 0.5 + (year - 2020) * 0.3
+        if indicator.startswith("I_BPG_") and unit == "PC_IND":
+            value *= 0.7  # share of all people, smaller than the share of online buyers
+        return round(value, 2)
 
     @staticmethod
     def years_for(indicator):
@@ -128,14 +132,16 @@ class World:
                             status[key] = "e"
             return jsonstat(dims, cells, status)
         indicator, unit = params["indic_is"][0], params["unit"][0]
-        since = int(params["sinceTimePeriod"][0])
+        since = int(params.get("sinceTimePeriod", ["2020"])[0])
         years = [y for y in self.years_for(indicator) if y >= since]
         dims = [("freq", ["A"]), ("ind_type", ["IND_TOTAL"]), ("indic_is", [indicator]), ("unit", [unit]),
                 ("geo", geos), ("time", [str(y) for y in years])]
         cells = {}
         for geo in geos:
             for year in years:
-                value = self.share(indicator, geo, year)
+                value = self.share(indicator, geo, year, unit)
+                if self.unit_mix_up and unit == "PC_IND" and indicator == "I_BPG_FOR":
+                    value = 95.0
                 if value is not None:
                     cells[("A", "IND_TOTAL", indicator, unit, geo, str(year))] = value
         return jsonstat(dims, cells)
