@@ -30,7 +30,7 @@ def test_range_is_high_minus_low_over_low(world, today):
 def test_every_non_euro_currency_is_covered(world, today):
     result = fx.pull(world.fetch, today, currencies())
     assert sorted(result["per_amount"]) == ["CZK", "DKK", "EUR", "HUF", "PLN", "RON", "SEK"]
-    assert "all 6 non-euro currencies present" in result["checks"][0]["text"]
+    assert "all 6 non-euro currencies" in result["checks"][0]["text"]
 
 
 def test_a_stale_feed_is_an_error(world):

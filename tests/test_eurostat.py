@@ -68,7 +68,7 @@ def test_population_flags_travel_with_the_numbers(world, today):
     clothes = next(p for p in result["products"] if p["key"] == "clothes")  # 2024: no flags
     assert everything["population_flags"] == {"FR": "p", "RO": "e"}
     assert clothes["population_flags"] == {}
-    assert any("France provisional" in c["text"] and "Romania estimated" in c["text"] for c in result["checks"])
+    assert any("France provisional" in c.get("detail", "") and "Romania estimated" in c.get("detail", "") for c in result["checks"])
 
 
 def test_incomplete_population_is_an_error(world, today):

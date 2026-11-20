@@ -83,8 +83,9 @@ def pull(fetch, today, local_currencies):
 
     non_euro = sorted(c for c in set(local_currencies) if c != "EUR")
     checks = [
-        {"ok": True, "text": f"ECB rates: {len(ordered)} days to {latest}; all {len(non_euro)} non-euro currencies present"},
-        {"ok": True, "text": f"No currency moved over {MAX_DAILY_MOVE:.0%} in a day (a sign of a bad feed)"},
+        {"ok": True, "text": f"ECB rates to {latest}; all {len(non_euro)} non-euro currencies",
+         "detail": f"{len(ordered)} working days from {ordered[0]}: {', '.join(non_euro)}"},
+        {"ok": True, "text": f"No one-day move over {MAX_DAILY_MOVE:.0%} (a sign of a bad feed)"},
     ]
     return {
         "latest": latest,

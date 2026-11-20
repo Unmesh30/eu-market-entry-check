@@ -164,7 +164,10 @@ footer { color: var(--muted); font-size: 12px; display: flex; flex-wrap: wrap; g
   .tiles { gap: 6px; margin-top: 6px; }
   .tile { padding: 6px 9px; }
   .tile-value { font-size: 17px; }
-  .inputs { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 6px; }
+  .inputs { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; margin-top: 6px; }
+  .inputs label { font-size: 11px; }
+  .field { padding: 0 6px; }
+  .field input { font-size: 13px; }
   .results { margin-top: 6px; }
   .result { padding: 6px 9px; font-size: 12.5px; }
   .rows { font-size: 12px; }
@@ -372,8 +375,8 @@ const DATA = __DATA__;
     const max = Math.max(...rows.map((r) => (byAbroad ? r.abroad : r.buyers)));
     $("rank-caption").innerHTML = byAbroad
       ? `Share of online buyers who bought from sellers in another country, ${ABROAD.year} (the latest year published). <a href="${tableLink(ABROAD.dataset)}">Source</a>`
-      : `People aged 16–74 who bought this online in the last 3 months (${p.year} survey). <a href="${tableLink(p.dataset)}">Source</a>`;
-    $("rows-caption").textContent = byAbroad ? "EU countries ranked by buying from sellers abroad" : `EU countries ranked by people who bought ${p.label.toLowerCase()} online`;
+      : `People aged 16–74 who ${esc(p.phrase)} in the last 3 months (${p.year} survey). <a href="${tableLink(p.dataset)}">Source</a>`;
+    $("rows-caption").textContent = byAbroad ? "EU countries ranked by buying from sellers abroad" : `EU countries ranked by people who ${p.phrase}`;
     $("th-bar").textContent = byAbroad ? "Bought from abroad" : "People who bought it";
     $("th-v1").textContent = byAbroad ? "Abroad" : "People";
     $("th-v2").textContent = byAbroad ? "People" : "Abroad";
@@ -428,10 +431,10 @@ const DATA = __DATA__;
       notes.push(esc(`The EU tax database also lists ${r.rate}% ${r.phrase}${r.note ? ", " + r.note : ""}.`));
     }
     if (currency !== "EUR") {
-      notes.push(esc(`${country.name} uses the ${DATA.currency_names[currency]} (${currency}), so the currency figures are for ${currency}.`));
+      notes.push(esc(`Currency: ${DATA.currency_names[currency]} (${currency}).`));
     }
     const popFlags = p.population_flags[code];
-    if (popFlags) notes.push(esc(`Eurostat marks ${country.name}'s ${p.year} population figure as ${flagWords(popFlags)}.`));
+    if (popFlags) notes.push(esc(`Population ${p.year}: ${flagWords(popFlags)} (Eurostat flag).`));
     const customs = customsNote(p);
     if (customs) notes.push(customs);
     $("notes").innerHTML = notes.map((n) => `<li>${n}</li>`).join("");
@@ -498,7 +501,7 @@ const DATA = __DATA__;
     ].join(" · ");
     const checks = [...E.checks, ...V.checks, ...F.checks];
     $("checklist").innerHTML = checks.map((c) =>
-      `<li class="${c.ok ? "ok" : "bad"}"><span class="ic" aria-hidden="true">${c.ok ? "✓" : "!"}</span>` +
+      `<li class="${c.ok ? "ok" : "bad"}"${c.detail ? ` title="${esc(c.detail)}"` : ""}><span class="ic" aria-hidden="true">${c.ok ? "✓" : "!"}</span>` +
       `<span>${esc(c.text)}<span class="sr-only">${c.ok ? " (passed)" : " (needs attention)"}</span></span></li>`
     ).join("");
   }
@@ -545,7 +548,7 @@ const DATA = __DATA__;
     const p = PRODUCT[state.product];
     const flags = buyerFlags(code, p);
     return `<b>${esc(COUNTRIES[code].name)}</b><br>` +
-      `${people(p.buyers[code])} people bought ${esc(p.label.toLowerCase())} online in the last 3 months ` +
+      `${people(p.buyers[code])} people ${esc(p.phrase)} in the last 3 months ` +
       `(${pct(p.share[code], 1)} of people aged 16–74, ${p.year})${flags ? `; Eurostat: ${esc(flagWords(flags))}` : ""}.<br>` +
       `${pct(ABROAD.any[code], 1)} of online buyers bought from sellers in another country (${ABROAD.year}).`;
   }

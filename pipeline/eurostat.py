@@ -28,17 +28,22 @@ FLAG_MEANINGS = {
 
 # What a merchant might sell. Every share means "people aged 16-74 who bought this online in the
 # last 3 months" (Eurostat's definition), so the products compare like for like.
+def _product(key, label, phrase, dataset, indicator, kind):
+    """`label` is the menu name; `phrase` follows "people who" and matches Eurostat's wording."""
+    return {"key": key, "label": label, "phrase": phrase, "dataset": dataset, "indicator": indicator, "kind": kind}
+
+
 PRODUCTS = [
-    {"key": "all", "label": "Anything (all online purchases)", "dataset": "isoc_ec_ib20", "indicator": "I_BUY3", "kind": "any"},
-    {"key": "clothes", "label": "Clothes, shoes and accessories", "dataset": "isoc_ec_ibgs", "indicator": "I_BCLOT1", "kind": "physical"},
-    {"key": "beauty", "label": "Cosmetics, beauty and wellness", "dataset": "isoc_ec_ibgs", "indicator": "I_BCBW", "kind": "physical"},
-    {"key": "electronics", "label": "Consumer electronics and appliances", "dataset": "isoc_ec_ibgs", "indicator": "I_BEEQU1", "kind": "physical"},
-    {"key": "computers", "label": "Computers, phones and accessories", "dataset": "isoc_ec_ibgs", "indicator": "I_BHARD1", "kind": "physical"},
-    {"key": "home", "label": "Furniture, home and garden", "dataset": "isoc_ec_ibgs", "indicator": "I_BFURN1", "kind": "physical"},
-    {"key": "sports", "label": "Sports goods", "dataset": "isoc_ec_ibgs", "indicator": "I_BSPG", "kind": "physical"},
-    {"key": "software", "label": "Software (downloads)", "dataset": "isoc_ec_ibgs", "indicator": "I_BSOFT2", "kind": "digital"},
-    {"key": "games", "label": "Games (downloads)", "dataset": "isoc_ec_ibgs", "indicator": "I_BGAMES2", "kind": "digital"},
-    {"key": "apps", "label": "Paid app subscriptions (e.g. language, travel, weather)", "dataset": "isoc_ec_ibgs", "indicator": "I_BAPP2", "kind": "digital"},
+    _product("all", "Anything", "bought something online", "isoc_ec_ib20", "I_BUY3", "any"),
+    _product("clothes", "Clothes and shoes", "bought clothes, shoes or accessories online", "isoc_ec_ibgs", "I_BCLOT1", "physical"),
+    _product("beauty", "Beauty and wellness", "bought cosmetics, beauty or wellness products online", "isoc_ec_ibgs", "I_BCBW", "physical"),
+    _product("electronics", "Electronics and appliances", "bought consumer electronics or household appliances online", "isoc_ec_ibgs", "I_BEEQU1", "physical"),
+    _product("computers", "Computers and phones", "bought computers, tablets, phones or accessories online", "isoc_ec_ibgs", "I_BHARD1", "physical"),
+    _product("home", "Furniture and home", "bought furniture, home accessories or garden products online", "isoc_ec_ibgs", "I_BFURN1", "physical"),
+    _product("sports", "Sports goods", "bought sports goods online", "isoc_ec_ibgs", "I_BSPG", "physical"),
+    _product("software", "Software downloads", "bought software as a download", "isoc_ec_ibgs", "I_BSOFT2", "digital"),
+    _product("games", "Game downloads", "bought games as a download", "isoc_ec_ibgs", "I_BGAMES2", "digital"),
+    _product("apps", "App subscriptions", "had a paid app subscription (e.g. language, travel, weather)", "isoc_ec_ibgs", "I_BAPP2", "digital"),
 ]
 
 # Share of online buyers who bought from sellers in other countries.
@@ -239,11 +244,13 @@ def pull(fetch, today):
         flagged.setdefault(country, set()).update(flag)
     flagged = {c: "".join(sorted(f)) for c, f in flagged.items()}
 
+    names = ", ".join(EU27[c][0] for c in sorted(flagged, key=lambda c: EU27[c][0]))
     checks = [
-        {"ok": True, "text": f"Each product: latest year with all 27 countries ({years_text}); no gap read as zero"},
-        {"ok": True, "text": f"Buying abroad: {abroad_year}, the latest year published for all 27"},
+        {"ok": True, "text": "Each product: latest survey year with all 27 countries", "detail": f"Survey years: {years_text}. A gap is never read as zero."},
+        {"ok": True, "text": f"Buying abroad: {abroad_year}, the latest year for all 27"},
         {"ok": True, "text": f"Population 16–74 matched to each survey year ({', '.join(map(str, survey_years))})"},
-        {"ok": True, "text": (f"Eurostat flags shown: {flag_summary(flagged)}" if flagged else "No Eurostat flags on the numbers shown")},
+        {"ok": True, "text": f"Eurostat flags shown ({names})" if flagged else "No Eurostat flags on the numbers shown",
+         "detail": flag_summary(flagged)},
     ]
     return {
         "products": products,

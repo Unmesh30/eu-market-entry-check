@@ -216,9 +216,11 @@ def pull(fetch, today):
                 f"{EU27[code][0]}: {regional['region']} {regional['rate']:g}% kept apart from {rates[code]['rate']:g}%"
             )})
     if confirmed:
-        checks.append({"ok": True, "text": (
-            f"Rate changes since {cutoff.year} confirmed in the EU database ({len(confirmed)})"
-        )})
+        checks.append({
+            "ok": True,
+            "text": f"Rate changes since {cutoff.year} confirmed in the EU database ({len(confirmed)})",
+            "detail": by_name(confirmed),
+        })
     if unconfirmed:
         checks.append({"ok": False, "text": f"Rate change not confirmed in the EU database, so not shown: {by_name(unconfirmed)}"})
     return {"rates": rates, "tedb_page": TEDB_PAGE, "open_list_page": OPEN_VAT_LIST_PAGE, "checks": checks}
