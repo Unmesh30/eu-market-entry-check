@@ -144,7 +144,7 @@
   "u": "low reliability",
   "z": "not applicable"
  },
- "generated_at": "2026-11-20T20:05Z",
+ "generated_at": "2026-11-20T22:10Z",
  "sources": {
   "eurostat": {
    "abroad": {
@@ -237,6 +237,69 @@
      "SI": 21.75,
      "SK": 14.81
     },
+    "people": {
+     "AT": 3082536,
+     "BE": 3710176,
+     "BG": 420859,
+     "CY": 320260,
+     "CZ": 2319993,
+     "DE": 10399189,
+     "DK": 1532615,
+     "EE": 333051,
+     "EL": 1174082,
+     "ES": 8869382,
+     "FI": 1268913,
+     "FR": 16636153,
+     "HR": 756085,
+     "HU": 1987796,
+     "IE": 1949590,
+     "IT": 7517559,
+     "LT": 469590,
+     "LU": 272283,
+     "LV": 375154,
+     "MT": 212474,
+     "NL": 4810529,
+     "PL": 2242691,
+     "PT": 2029200,
+     "RO": 974226,
+     "SE": 2134334,
+     "SI": 475053,
+     "SK": 1176372
+    },
+    "people_share": {
+     "AT": 45.09,
+     "BE": 43.26,
+     "BG": 8.71,
+     "CY": 44.44,
+     "CZ": 28.95,
+     "DE": 16.88,
+     "DK": 35.42,
+     "EE": 33.32,
+     "EL": 15.26,
+     "ES": 24.47,
+     "FI": 31.25,
+     "FR": 33.99,
+     "HR": 26.07,
+     "HU": 27.21,
+     "IE": 50.9,
+     "IT": 17.16,
+     "LT": 21.94,
+     "LU": 53.89,
+     "LV": 26.93,
+     "MT": 50.07,
+     "NL": 36.31,
+     "PL": 8.03,
+     "PT": 24.85,
+     "RO": 6.82,
+     "SE": 28.5,
+     "SI": 30.07,
+     "SK": 28.38
+    },
+    "population_flags": {
+     "DE": "b",
+     "PL": "ep",
+     "RO": "e"
+    },
     "updated": "2026-04-17T11:00:00+0200",
     "year": 2023
    },
@@ -247,21 +310,132 @@
      "text": "Each product: latest survey year with all 27 countries"
     },
     {
+     "detail": "People counted with the 2023 population. EU and non-EU overlap: some buy from both.",
      "ok": true,
      "text": "Buying abroad: 2023, the latest year for all 27"
     },
     {
      "ok": true,
-     "text": "Population 16–74 matched to each survey year (2024, 2025)"
+     "text": "Population 16–74 matched to each survey year (2023, 2024, 2025)"
     },
     {
-     "detail": "France provisional, Poland estimated and provisional, Romania estimated",
+     "detail": "France provisional, Germany break in series, Poland estimated and provisional, Romania estimated",
      "ok": true,
-     "text": "Eurostat flags shown (France, Poland, Romania)"
+     "text": "Eurostat flags shown (France, Germany, Poland, Romania)"
     }
    ],
    "fresh": true,
    "population": {
+    "2023": {
+     "AT": {
+      "flags": "",
+      "value": 6836408
+     },
+     "BE": {
+      "flags": "",
+      "value": 8576459
+     },
+     "BG": {
+      "flags": "",
+      "value": 4831907
+     },
+     "CY": {
+      "flags": "",
+      "value": 720656
+     },
+     "CZ": {
+      "flags": "",
+      "value": 8013794
+     },
+     "DE": {
+      "flags": "b",
+      "value": 61606569
+     },
+     "DK": {
+      "flags": "",
+      "value": 4326975
+     },
+     "EE": {
+      "flags": "",
+      "value": 999553
+     },
+     "EL": {
+      "flags": "",
+      "value": 7693854
+     },
+     "ES": {
+      "flags": "",
+      "value": 36245940
+     },
+     "FI": {
+      "flags": "",
+      "value": 4060522
+     },
+     "FR": {
+      "flags": "",
+      "value": 48944258
+     },
+     "HR": {
+      "flags": "",
+      "value": 2900212
+     },
+     "HU": {
+      "flags": "",
+      "value": 7305386
+     },
+     "IE": {
+      "flags": "",
+      "value": 3830235
+     },
+     "IT": {
+      "flags": "",
+      "value": 43808617
+     },
+     "LT": {
+      "flags": "",
+      "value": 2140337
+     },
+     "LU": {
+      "flags": "",
+      "value": 505257
+     },
+     "LV": {
+      "flags": "",
+      "value": 1393071
+     },
+     "MT": {
+      "flags": "",
+      "value": 424353
+     },
+     "NL": {
+      "flags": "",
+      "value": 13248495
+     },
+     "PL": {
+      "flags": "ep",
+      "value": 27928906
+     },
+     "PT": {
+      "flags": "",
+      "value": 8165795
+     },
+     "RO": {
+      "flags": "e",
+      "value": 14284842
+     },
+     "SE": {
+      "flags": "",
+      "value": 7488892
+     },
+     "SI": {
+      "flags": "",
+      "value": 1579825
+     },
+     "SK": {
+      "flags": "",
+      "value": 4145074
+     }
+    },
     "2024": {
      "AT": {
       "flags": "",
@@ -1225,7 +1399,7 @@
      "year": 2025
     }
    ],
-   "pulled_at": "2026-11-20T20:05Z",
+   "pulled_at": "2026-11-20T22:10Z",
    "table_page": "https://ec.europa.eu/eurostat/databrowser/view/{dataset}/default/table?lang=en",
    "updated": {
     "demo_pjan": "2026-11-19T23:00:00+0100",
@@ -1238,9 +1412,9 @@
    "amount": 100000,
    "checks": [
     {
-     "detail": "65 working days from 2026-08-24: CZK, DKK, HUF, PLN, RON, SEK",
+     "detail": "65 working days from 24 Aug 2026: CZK, DKK, HUF, PLN, RON, SEK",
      "ok": true,
-     "text": "ECB rates to 2026-11-20; all 6 non-euro currencies"
+     "text": "ECB rates to 20 Nov 2026; all 6 non-euro currencies"
     },
     {
      "ok": true,
@@ -1366,7 +1540,7 @@
      }
     }
    },
-   "pulled_at": "2026-11-20T20:05Z"
+   "pulled_at": "2026-11-20T22:10Z"
   },
   "vat": {
    "checks": [
@@ -1390,7 +1564,7 @@
    ],
    "fresh": true,
    "open_list_page": "https://github.com/ibericode/vat-rates",
-   "pulled_at": "2026-11-20T20:05Z",
+   "pulled_at": "2026-11-20T22:10Z",
    "rates": {
     "AT": {
      "change": null,
