@@ -144,7 +144,7 @@
   "u": "low reliability",
   "z": "not applicable"
  },
- "generated_at": "2026-11-20T22:10Z",
+ "generated_at": "2026-11-21T01:49Z",
  "sources": {
   "eurostat": {
    "abroad": {
@@ -1399,7 +1399,7 @@
      "year": 2025
     }
    ],
-   "pulled_at": "2026-11-20T22:10Z",
+   "pulled_at": "2026-11-21T01:49Z",
    "table_page": "https://ec.europa.eu/eurostat/databrowser/view/{dataset}/default/table?lang=en",
    "updated": {
     "demo_pjan": "2026-11-19T23:00:00+0100",
@@ -1540,7 +1540,7 @@
      }
     }
    },
-   "pulled_at": "2026-11-20T22:10Z"
+   "pulled_at": "2026-11-21T01:49Z"
   },
   "vat": {
    "checks": [
@@ -1564,7 +1564,7 @@
    ],
    "fresh": true,
    "open_list_page": "https://github.com/ibericode/vat-rates",
-   "pulled_at": "2026-11-20T22:10Z",
+   "pulled_at": "2026-11-21T01:49Z",
    "rates": {
     "AT": {
      "change": null,
